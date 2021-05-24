@@ -29,5 +29,4 @@ public abstract class Sintoma implements Comparable<Sintoma>{
     public int hashCode() {
         return Objects.hash(nombre);
     }
-
 }
