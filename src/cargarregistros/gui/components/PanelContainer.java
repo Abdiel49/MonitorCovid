@@ -1,7 +1,5 @@
 package cargarregistros.gui.components;
 
-import cargarregistros.gui.Constants;
-
 import javax.swing.JPanel;
 import java.awt.Dimension;
 

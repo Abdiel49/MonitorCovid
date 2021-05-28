@@ -35,7 +35,7 @@ public class PanelSintomas {
 //        listContainer = new JList<>();
         initList();
         register = new JButton("Registrar Sintomas");
-        this.add(register);
+        panelSymptoms.add(register);
 //        this.add(listContainer);
     }
 
@@ -43,7 +43,7 @@ public class PanelSintomas {
         for (String s : symptoms){
             JCheckBox check = new JCheckBox(s);
             listCheck.add(check);
-            this.add(check);
+            panelSymptoms.add(check);
         }
     }
 }
