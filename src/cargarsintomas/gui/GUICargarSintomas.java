@@ -1,15 +1,13 @@
 package cargarsintomas.gui;
 
 import cargarsintomas.SymptomManagerFiles;
-import cargarsintomas.Validator;
-import files.ClassToObject;
+import cargarsintomas.utils.Validator;
 import monitor.Sintoma;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class GUICargarSintomas {
 

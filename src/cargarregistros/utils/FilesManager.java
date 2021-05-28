@@ -1,11 +1,9 @@
-package files;
+package cargarregistros.utils;
 
 import java.io.*;
 import java.nio.file.Files;
-//import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +14,12 @@ public class FilesManager {
 
     public FilesManager() {
         absolutePath = "out/production/MonitorCovid/";
-        realPath = absolutePath;
+        fileExists();
+    }
+
+    private void fileExists(){
+        File f = new File(absolutePath);
+        realPath = f.exists() ? absolutePath : "./";
     }
 
     public List<String> readRowsFile(String relativePath){
@@ -56,22 +59,6 @@ public class FilesManager {
 //        fileExists(path);
         File folder = new File(realPath + path);// || new File(path) ;
         return folder.list();
-    }
-
-    private boolean fileExists(String path){
-        File f = new File(absolutePath + path);
-        String production = "";
-        if(f.exists()){
-            realPath = absolutePath;
-
-            return true;
-        }else{
-            File f2 = new File(production + path);
-            if(f2.exists()){
-                realPath = production;
-                return true;
-            } else return false;
-        }
     }
 
     public boolean fristLineInFileIsEmpty(String path){

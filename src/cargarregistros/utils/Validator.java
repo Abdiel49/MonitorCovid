@@ -1,4 +1,4 @@
-package cargarsintomas;
+package cargarregistros.utils;
 
 public class Validator {
 

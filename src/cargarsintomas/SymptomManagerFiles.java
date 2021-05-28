@@ -1,21 +1,27 @@
 package cargarsintomas;
 
-import files.FilesManager;
+import cargarsintomas.utils.FilesManager;
 import monitor.Sintoma;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class SymptomManagerFiles {
 
     private final FilesManager files;
     private final String path;
     private final String DELIMETER;
+
     public SymptomManagerFiles(){
         files = new FilesManager();
         path = "cargarsintomas/sintomas.csv";
         DELIMETER = ",";
+    }
+
+    public List<String> getSymptomsDataFile(){
+        return files.readRowsFile(path);
     }
 
     /**
@@ -38,7 +44,7 @@ public class SymptomManagerFiles {
 
     /*
      * abdiel249
-     * @param className - complete class path to be Instance
+     * @param className - complete s path to be Instance
      * @param value - Value to constructor object
      * @return a Object Instance
      */
