@@ -8,6 +8,6 @@ public class Validator {
 
     public static String normalize(String input){
         String s = input.replaceAll("\\s+", " ");
-        return s.trim().toLowerCase();
+        return s.trim().toUpperCase();
     }
 }

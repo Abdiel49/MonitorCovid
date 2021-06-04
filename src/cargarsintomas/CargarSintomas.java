@@ -3,19 +3,22 @@ package cargarsintomas;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CargarSintomas {
 
     private final SymptomManagerFiles manager;
-    Sintomas sintomas;
+    private Sintomas sintomas;
 
     public CargarSintomas(){
         manager = new SymptomManagerFiles();
+        sintomas = new Sintomas();
+        loadSymptoms();
     }
 
     public Sintomas getSintomas(){
-        loadSymptoms();
+//        loadSymptoms();
         return sintomas;
     }
 
@@ -23,7 +26,9 @@ public class CargarSintomas {
         List<String> listData = manager.getSymptomsDataFile();
         for (String s : listData){
             String[]data = s.split(",");
-            sintomas.add(makeSymptom( data ));
+            System.out.println(Arrays.toString(data));
+            Sintoma symptom = makeSymptom(data);
+            sintomas.add( symptom );
         }
     }
 

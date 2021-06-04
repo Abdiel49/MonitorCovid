@@ -1,49 +1,44 @@
 package cargarregistros.gui;
 
-import cargarregistros.gui.components.PanelContainer;
+import cargarregistros.gui.components.SCheckBox;
+import monitor.Sintoma;
 import monitor.Sintomas;
 
 import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
+import javax.swing.BoxLayout;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PanelSintomas {
+public class PanelSintomas extends JPanel{
 
-    private List<JCheckBox> listCheck;
-    private JButton register;
-    private PanelContainer panelSymptoms;
+    private final List<SCheckBox> listCheck;
+    private final Sintomas symptoms;
 
-    String[] symptoms = new String[]{
-        "Dolor de Garganta",
-        "Tos Seca",
-        "Dolor de Garganta"
-    };
-
-    public PanelSintomas(){
+    public PanelSintomas(Sintomas s){
+        symptoms = s;
         listCheck = new LinkedList<>();
-        panelSymptoms = new PanelContainer(Constants.WIDTH.get()/2, Constants.HEIGHT.get());
-        int rows = symptoms.length+1, cols=1;
-        panelSymptoms.setLayout(new GridLayout(rows, cols));
-        init();
-    }
-
-    private void init(){
-//        listContainer = new JList<>();
+        this.setPreferredSize( new Dimension(Constants.WIDTH.get()/2, Constants.HEIGHT.get()) );
+        this.setLayout(new BoxLayout( this, BoxLayout.Y_AXIS));
         initList();
-        register = new JButton("Registrar Sintomas");
-        panelSymptoms.add(register);
-//        this.add(listContainer);
     }
 
     private void initList(){
-        for (String s : symptoms){
-            JCheckBox check = new JCheckBox(s);
+        for (Sintoma s : symptoms){
+            SCheckBox check = new SCheckBox(s);
             listCheck.add(check);
-            panelSymptoms.add(check);
+            this.add(check);
         }
+    }
+
+    public Sintomas getSymptomsSelected(){
+        Sintomas s = new Sintomas();
+        for (SCheckBox check : listCheck){
+            if(check.isSelected()){
+                s.add(check.getSymptom());
+            }
+        }
+        return s;
     }
 }

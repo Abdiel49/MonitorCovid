@@ -1,6 +1,6 @@
 package monitor;
 
-import monitor.Sintomas;
+//import monitor.Sintomas;
 
 import java.util.Date;
 
@@ -17,5 +17,4 @@ public class Registro {
     public Sintomas getSintomas() {
         return sintomas;
     }
-
 }

@@ -74,7 +74,7 @@ public class SymptomManagerFiles {
             e.printStackTrace();
         }
         if(data.length()>0){
-            if(files.fristLineInFileIsEmpty(path)){
+            if(files.firstLineInFileIsEmpty(path)){
                 writeHeadInFile();
                 System.out.println("El archivo no existe");
             }

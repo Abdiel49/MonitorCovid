@@ -18,5 +18,6 @@ public class GFrame extends JFrame {
         this.setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
         this.setLocationRelativeTo(null);
         this.setVisible(false);
+        this.setResizable(false);
     }
 }

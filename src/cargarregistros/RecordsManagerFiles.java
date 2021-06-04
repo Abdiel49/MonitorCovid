@@ -38,7 +38,6 @@ public class RecordsManagerFiles {
         files.writeInFile(path,lineData);
     }
 
-
     public Registro getRegistroFromFile(String rowData){
 // Thu May 27 06:34:58 BOT 2021,sintomas.Determinante,tos seca,sintomas.TomarEnCuenta,Fiebre alta,
         Registro registro = null;
