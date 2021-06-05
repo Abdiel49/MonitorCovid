@@ -1,8 +1,8 @@
-#development data files NOT ignored
-cargarregistros/*.csv
-cargarsintomas/*.csv
-
 # production data files NOT ignored
+#cargarregistros/*.csv
+#cargarsintomas/*.csv
+
+#development data files NOT ignored
 !out/production/MonitorCovid/cargarsintomas/sintomas.csv
 !out/production/MonitorCovid/cargarregistros/registros.csv
 
