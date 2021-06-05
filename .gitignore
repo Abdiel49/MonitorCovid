@@ -1,5 +1,3 @@
-out/
-
 #development data files NOT ignored
 cargarregistros/*.csv
 cargarsintomas/*.csv
@@ -7,3 +5,5 @@ cargarsintomas/*.csv
 # production data files NOT ignored
 !out/production/MonitorCovid/cargarregistros/registros.csv
 !out/production/MonitorCovid/cargarsintomas/sintomas.csv
+
+out/
