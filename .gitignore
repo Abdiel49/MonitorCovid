@@ -7,3 +7,9 @@
 !out/production/MonitorCovid/cargarregistros/registros.csv
 
 out/
+
+# test functionalities
+
+src/pruebas.java
+src/sintomas/EsteNo.java
+src/sintomas/EsteSi.java
