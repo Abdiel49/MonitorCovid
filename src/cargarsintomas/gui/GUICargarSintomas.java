@@ -16,16 +16,16 @@ public class GUICargarSintomas {
 
     private final SFrame frame;
     private final InputSymptom inputSymptom;
-    private final PanelContainer mainPanel;
+    private final PanelContainer container;
     private final SymptomManagerFiles manager;
-    private final Map<String, String> data;
+    private final Map<String, String> dataMap;
 
     public GUICargarSintomas(){
-        frame = new SFrame("Cargar Sintomas");
-        mainPanel = new PanelContainer();
-        inputSymptom = new InputSymptom();
         manager = new SymptomManagerFiles();
-        data = new HashMap<>();
+        frame = new SFrame("Cargar Sintomas");
+        container = new PanelContainer();
+        inputSymptom = new InputSymptom(manager.getSymptomNamesInFile());
+        dataMap = new HashMap<>();
         init();
     }
 
@@ -34,17 +34,20 @@ public class GUICargarSintomas {
     }
 
     private void init(){
+//        title component
         JPanel titlePanel = new JPanel();
-        JPanel buttonPanel = new JPanel();
         JLabel title = new JLabel("Monitoreo de Sintomas");
+        titlePanel.add(title);
+//        action button component
+        JPanel buttonPanel = new JPanel();
         JButton addSymptom = new JButton("Aniadir");
         addSymptom.addActionListener(e -> addSymptomAction());
-        titlePanel.add(title);
         buttonPanel.add(addSymptom);
-        mainPanel.add(title);
-        mainPanel.add(inputSymptom);
-        mainPanel.add(buttonPanel);
-        frame.add(mainPanel);
+        container.add(title);
+        container.add(inputSymptom);
+        container.add(buttonPanel);
+        frame.add(container);
+//        frame.pack();
     }
 
     private void addSymptomAction(){
@@ -53,8 +56,7 @@ public class GUICargarSintomas {
         String type = data[TYPE];
         String param = data[NAME];
         String className = "sintomas."+type;
-
-//        data.put(param, type);
+        dataMap.put(param, type);
 //        table.addRowData(new String[]{type, param});
         Sintoma s = (Sintoma)manager.getObjectType(className,param);
         System.out.println("se aniadion un sintoma\n\tclassname:\t"+s.getClass().getName()+"\n\tparam:\t"+param);

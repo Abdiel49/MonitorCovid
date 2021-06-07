@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import java.awt.Dimension;
+import java.util.Vector;
 
 public class InputSymptom extends JPanel {
 
@@ -19,12 +20,13 @@ public class InputSymptom extends JPanel {
 
     private final String[] symp;
 
-    public InputSymptom(){
+    public InputSymptom(Vector<String> boxItems){
         symp = new String[]{
             "Tener en cuenta",
             "Importante",
             "La palmas bro"
         };
+        typeSymptomBox = new JComboBox<>(boxItems);
         init();
         initInputPanel();
     }
@@ -39,7 +41,7 @@ public class InputSymptom extends JPanel {
         JLabel label = new JLabel("Nombre del sintoma");
         int columns = 20;
         textField = new JTextField(columns);
-        typeSymptomBox = new JComboBox<>(symp);
+
         inputPanel.add(textField);
         inputPanel.add(typeSymptomBox);
         this.add(label);

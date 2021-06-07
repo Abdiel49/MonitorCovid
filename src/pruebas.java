@@ -1,5 +1,30 @@
+import monitor.Sintoma;
+import monitor.Sintomas;
+import sintomas.TomarEnCuenta;
+
 public class pruebas {
     public static void main(String[] args) {
+
+        String fileName = "TomarEnCuenta";
+        String symptomClass = "sintomas."+fileName;
+        boolean is = false;
+        try{
+            Sintoma s = new TomarEnCuenta("Tos");
+            System.out.println(s.getClass());
+            Class<?> cl = Class.forName(symptomClass);
+            System.out.println("Super Class for name is:\t"+cl.getSuperclass()+"\tand Sintoma class is:\t"+Sintoma.class);
+
+            boolean IS = cl.getSuperclass().equals(Sintoma.class);
+//            is = ;
+//            cl.
+            System.out.println("super class IS\t"+IS);
+
+//            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+//            is = false;
+        }
+//        System.out.println("is Instance of 'Sintoma'?\t"+is);
 
 //        String e = "class sintomas.Determinante";
 //        System.out.println(e);

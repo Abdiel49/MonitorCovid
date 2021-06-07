@@ -7,44 +7,55 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Vector;
 
 public class SymptomManagerFiles {
 
     private final FilesManager files;
-    private final String path;
+    private final String pathSymptom;
     private final String DELIMETER;
 
     public SymptomManagerFiles(){
         files = new FilesManager();
-        path = "cargarsintomas/sintomas.csv";
+        pathSymptom = "cargarsintomas/sintomas.csv";
         DELIMETER = ",";
     }
 
     public List<String> getSymptomsDataFile(){
-        return files.readRowsFile(path);
+        return files.readRowsFile(pathSymptom);
     }
 
     /**
      * abdiel249
-     * @param path relative path to folder
-     * @return String[] with name files in folder provided in the param or null if path does not exists
+     * @return Vector<String> with class name files in folder provided in the param or null if pathSymptom does not exists
      */
-    public String[] getNameFiles(String path){
-        String[] resp;
-        String[] fs = files.readNameFiles(path);
-        if( fs != null){
-            resp = new String[fs.length];
-            for (int i = 0; i < fs.length; i++) {
-                String[] fileName = fs[i].split(".class");
-                resp [i] = fileName[0];
+    public Vector<String> getSymptomNamesInFile(){
+        String path = "sintomas/";
+        Vector<String> items = new Vector<>();
+        String[] fileNames = files.readNameFiles(path);
+        for(String fs : fileNames){
+            String fileName = fs.replace(".class","");
+            if(validateClassNameFile(fileName)){
+                items.add(fileName);
             }
-            return resp;
-        }else return new String[]{};
+        }
+        return items;
+    }
+
+    private boolean validateClassNameFile(String fileName){
+        String symptomClass = "sintomas."+fileName;
+        try{
+            Class<?> cl = Class.forName(symptomClass);
+            return cl.getSuperclass().equals(Sintoma.class);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /*
      * abdiel249
-     * @param className - complete s path to be Instance
+     * @param className - complete s pathSymptom to be Instance
      * @param value - Value to constructor object
      * @return a Object Instance
      */
@@ -74,11 +85,11 @@ public class SymptomManagerFiles {
             e.printStackTrace();
         }
         if(data.length()>0){
-            if(files.firstLineInFileIsEmpty(path)){
+            if(files.firstLineInFileIsEmpty(pathSymptom)){
                 writeHeadInFile();
                 System.out.println("El archivo no existe");
             }
-            files.writeInFile(path,data);
+            files.writeInFile(pathSymptom,data);
         }
     }
 
@@ -88,7 +99,7 @@ public class SymptomManagerFiles {
      */
     private void writeHeadInFile(){
         String head = "CLASS_TYPE,NAME";
-        files.writeInFile(path,head);
+        files.writeInFile(pathSymptom,head);
     }
 
     /**
