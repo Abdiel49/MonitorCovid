@@ -15,16 +15,20 @@ import java.util.Map;
 public class GUICargarSintomas {
 
     private final SFrame frame;
-    private final InputSymptom inputSymptom;
     private final PanelContainer container;
     private final SymptomManagerFiles manager;
     private final Map<String, String> dataMap;
+    private InputSymptom inputSymptom;
 
     public GUICargarSintomas(){
         manager = new SymptomManagerFiles();
         frame = new SFrame("Cargar Sintomas");
         container = new PanelContainer();
-        inputSymptom = new InputSymptom(manager.getSymptomNamesInFile());
+//        try {
+            inputSymptom = new InputSymptom(manager.getSymptomNamesInFile());
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         dataMap = new HashMap<>();
         init();
     }
@@ -59,7 +63,7 @@ public class GUICargarSintomas {
         dataMap.put(param, type);
 //        table.addRowData(new String[]{type, param});
         Sintoma s = (Sintoma)manager.getObjectType(className,param);
-        System.out.println("se aniadion un sintoma\n\tclassname:\t"+s.getClass().getName()+"\n\tparam:\t"+param);
+//        System.out.println("se aniadion un sintoma\n\tclassname:\t"+s.getClass().getName()+"\n\tparam:\t"+param);
         manager.saveSymptomInFile(s);
     }
 }

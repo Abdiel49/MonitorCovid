@@ -22,8 +22,13 @@ public class CargarSintomas {
         return sintomas;
     }
 
-    private void loadSymptoms(){
-        List<String> listData = manager.getSymptomsDataFile();
+    private void loadSymptoms() {
+        List<String> listData = null;
+//        try {
+            listData = manager.getSymptomsDataFile();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         for (String s : listData){
             String[]data = s.split(",");
             System.out.println(Arrays.toString(data));

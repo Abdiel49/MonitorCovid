@@ -6,6 +6,7 @@ import monitor.Sintoma;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,6 +15,7 @@ public class SymptomManagerFiles {
     private final FilesManager files;
     private final String pathSymptom;
     private final String DELIMETER;
+    private List<String> deprecatedSymptoms;
 
     public SymptomManagerFiles(){
         files = new FilesManager();
@@ -21,15 +23,31 @@ public class SymptomManagerFiles {
         DELIMETER = ",";
     }
 
-    public List<String> getSymptomsDataFile(){
-        return files.readRowsFile(pathSymptom);
+    public List<String> getDeprecatedSymptoms(){
+        return deprecatedSymptoms;
+    }
+
+    public List<String> getSymptomsDataFile() {
+        List<String> symptoms = files.readRowsFile(pathSymptom);
+        deprecatedSymptoms = new LinkedList<>();
+//        for(String s : symptoms){
+//            String[] data = s.split(DELIMETER);
+//            String sData = data[0].replace("sintomas.","");
+//            if( validateClassNameFile(sData)){
+//                symptoms.add(s);
+//            }else{
+//                deprecatedSymptoms.add(s);
+//            }
+//            System.out.println("Symptom data in file is:\t"+s);
+//        }
+        return symptoms;
     }
 
     /**
      * abdiel249
      * @return Vector<String> with class name files in folder provided in the param or null if pathSymptom does not exists
      */
-    public Vector<String> getSymptomNamesInFile(){
+    public Vector<String> getSymptomNamesInFile() {
         String path = "sintomas/";
         Vector<String> items = new Vector<>();
         String[] fileNames = files.readNameFiles(path);
@@ -42,7 +60,7 @@ public class SymptomManagerFiles {
         return items;
     }
 
-    private boolean validateClassNameFile(String fileName){
+    private boolean validateClassNameFile(String fileName) {
         String symptomClass = "sintomas."+fileName;
         try{
             Class<?> cl = Class.forName(symptomClass);
@@ -79,11 +97,11 @@ public class SymptomManagerFiles {
      */
     public void saveSymptomInFile(Sintoma symptom) {
         String data="";
-        try {
+//        try {
             data = getSymptomData(symptom);
-        }catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        }catch (NoSuchFieldException | IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
         if(data.length()>0){
             if(files.firstLineInFileIsEmpty(pathSymptom)){
                 writeHeadInFile();
@@ -109,17 +127,24 @@ public class SymptomManagerFiles {
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
      */
-    private String getSymptomData(Sintoma symptom) throws NoSuchFieldException, IllegalAccessException {
+    private String getSymptomData(Sintoma symptom)  {
         //class sintoma is:	class sintomas.Determinante
         Class<?> c = symptom.getClass();
         String typename = c.getTypeName();
         String classType = typename.replaceAll("class ","");
-        Field f = c.getSuperclass().getDeclaredField("nombre");
-        f.setAccessible(true);
-        String name = (String)f.get(symptom);
-        String data = String.join(DELIMETER, classType, name);
-        f.setAccessible(false);
-        System.out.println("Symptom data is:\t"+data);
+        String data="";
+        try {
+            Field f = null;
+            f = c.getSuperclass().getDeclaredField("nombre");
+            f.setAccessible(true);
+            String name = (String)f.get(symptom);
+            data = String.join(DELIMETER, classType, name);
+            f.setAccessible(false);
+            System.out.println("Symptom data is:\t"+data);
+            return data;
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return data;
     }
 }

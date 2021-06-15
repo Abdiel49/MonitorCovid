@@ -34,13 +34,13 @@ public class RecordsManagerFiles {
 
     public void saveRecordInFile(Registro registro){
         String lineData = getRecordData(registro);
-        System.out.println("Record line data is:\t"+lineData);
+//        System.out.println("Record line data is:\t"+lineData);
         files.writeInFile(path,lineData);
     }
 
     public Registro getRegistroFromFile(String rowData){
 // Thu May 27 06:34:58 BOT 2021,sintomas.Determinante,tos seca,sintomas.TomarEnCuenta,Fiebre alta,
-        Registro registro = null;
+        Registro registro;
         String[] data = rowData.split(DELIMETER);
         Date date = parseDate(data[0]);
         Sintomas sintomas = loadSintomas(data);
@@ -51,10 +51,12 @@ public class RecordsManagerFiles {
     private Sintomas loadSintomas(String[] rowData){
         Sintomas sintomas = new Sintomas();
         for (int i = 1; i < rowData.length; i+=2) {
-            String className = rowData[i];
-            String value = rowData[i+2];
-            Sintoma s = (Sintoma) getObjectType(className,value);
-            sintomas.add(s);
+            if(rowData[i].length()>0){
+                String className = rowData[i];
+                String value = rowData[i+1];
+                Sintoma s = (Sintoma) getObjectType(className,value);
+                sintomas.add(s);
+            }
         }
         return sintomas;
     }
