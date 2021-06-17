@@ -1,5 +1,6 @@
 package cargarsintomas;
 
+import cargarsintomas.gui.GUICargarSintomas;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
@@ -14,10 +15,18 @@ public class CargarSintomas {
     public CargarSintomas(){
         manager = new SymptomManagerFiles();
         sintomas = new Sintomas();
+//        initGUI();
+        loadSymptoms();
+    }
+
+    private void initGUI(){
+        GUICargarSintomas gui = new GUICargarSintomas();
+        gui.show();
         loadSymptoms();
     }
 
     public Sintomas getSintomas(){
+//        initGUI();
 //        loadSymptoms();
         return sintomas;
     }

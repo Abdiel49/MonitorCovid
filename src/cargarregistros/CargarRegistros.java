@@ -1,5 +1,6 @@
 package cargarregistros;
 
+import cargarregistros.gui.GUICargarRegistros;
 import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintomas;
@@ -16,10 +17,17 @@ public class CargarRegistros {
         sintomas = s;
         registros = new Registros();
         manager = new RecordsManagerFiles();
+//        initGUI();
         loadRegistros();
     }
 
+    private void initGUI(){
+        GUICargarRegistros gui = new GUICargarRegistros();
+        gui.show();
+    }
+
     public Registro getRegistro(){
+        System.out.println("===== Cargar istros get registro =====");
         return registros.isEmpty() ? null : registros.peek();
     }
 

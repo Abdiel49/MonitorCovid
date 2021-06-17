@@ -1,8 +1,9 @@
 package monitor;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Sintoma implements Comparable<Sintoma>{
+public abstract class Sintoma implements Comparable<Sintoma>, Serializable {
     private String nombre;
 
     public Sintoma(String n) {
