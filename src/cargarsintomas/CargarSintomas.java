@@ -1,55 +1,39 @@
 package cargarsintomas;
 
 import cargarsintomas.gui.GUICargarSintomas;
-import monitor.Sintoma;
+//import monitor.Sintoma;
+import cargarsintomas.utils.SymptomManager;
 import monitor.Sintomas;
 
-import java.util.Arrays;
-import java.util.List;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class CargarSintomas {
 
-    private final SymptomManagerFiles manager;
+    private final SymptomManager manager;
     private Sintomas sintomas;
+    private final GUICargarSintomas gui;
 
     public CargarSintomas(){
-        manager = new SymptomManagerFiles();
+        manager = new SymptomManager();
         sintomas = new Sintomas();
-//        initGUI();
-        loadSymptoms();
-    }
-
-    private void initGUI(){
-        GUICargarSintomas gui = new GUICargarSintomas();
-        gui.show();
-        loadSymptoms();
+        gui = new GUICargarSintomas();
+//        loadSymptoms();
     }
 
     public Sintomas getSintomas(){
-//        initGUI();
-//        loadSymptoms();
+        loadSymptoms();
         return sintomas;
     }
 
     private void loadSymptoms() {
-        List<String> listData = null;
-//        try {
-            listData = manager.getSymptomsDataFile();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        for (String s : listData){
-            String[]data = s.split(",");
-            System.out.println(Arrays.toString(data));
-            Sintoma symptom = makeSymptom(data);
-            sintomas.add( symptom );
-        }
+        sintomas = manager.loadSymptoms();
     }
-
-    private Sintoma makeSymptom(String[] data){
-        String className = data[0];
-        String value = data[1];
-        Object obj = manager.getObjectType(className,value);
-        return (Sintoma) obj;
-    }
+//
+//    private Sintoma makeSymptom(String[] data){
+//        String className = data[0];
+//        String value = data[1];
+//        Object obj = manager.getObjectType(className,value);
+//        return (Sintoma) obj;
+//    }
 }

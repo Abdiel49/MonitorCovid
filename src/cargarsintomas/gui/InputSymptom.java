@@ -1,6 +1,5 @@
 package cargarsintomas.gui;
 
-import cargarsintomas.gui.constants.ESize;
 import cargarsintomas.utils.Validator;
 
 import javax.swing.JPanel;
@@ -18,14 +17,7 @@ public class InputSymptom extends JPanel {
     private JComboBox<String> typeSymptomBox;
     private JPanel inputPanel;
 
-    private final String[] symp;
-
     public InputSymptom(Vector<String> boxItems){
-        symp = new String[]{
-            "Tener en cuenta",
-            "Importante",
-            "La palmas bro"
-        };
         typeSymptomBox = new JComboBox<>(boxItems);
         init();
         initInputPanel();

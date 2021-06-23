@@ -1,8 +1,5 @@
 package monitor;
 
-import sintomas.Determinante;
-import sintomas.Importante;
-
 import java.util.Date;
 
 public class CargarInfo {
@@ -17,8 +14,8 @@ public class CargarInfo {
     }
 
     private void cargarSintoma() {
-        perdidaDeOlfato = new Determinante("Perdida de olfato");
-        temperaturaAlta = new Importante("Temperatura alta");
+//        perdidaDeOlfato = new Determinante("Perdida de olfato");
+//        temperaturaAlta = new Importante("Temperatura alta");
     }
 
     private void cargarSintomas() {

@@ -1,4 +1,4 @@
-package cargarsintomas.gui.constants;
+package cargarsintomas.gui;
 
 public enum ESize {
 

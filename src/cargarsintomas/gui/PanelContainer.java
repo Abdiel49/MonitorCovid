@@ -1,6 +1,6 @@
-package cargarsintomas.gui.components;
+package cargarsintomas.gui;
 
-import cargarsintomas.gui.constants.ESize;
+import cargarsintomas.gui.ESize;
 
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
