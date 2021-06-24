@@ -51,7 +51,6 @@ public class SymptomManager {
         String finalpath = production ? path+SEPARATOR+testPath : path+SEPARATOR;
 //        System.out.println(finalpath);
         return finalpath;
-
     }
 
     public Vector<String> getSymptomNamesInFile() {
@@ -84,6 +83,7 @@ public class SymptomManager {
     public List<String> getDeprecatedSymptoms(){
         return deprecatedSymptoms;
     }
+
     public Sintomas loadSymptoms(){
         List<String> symptoms = readRowsFile();
         for(String s : symptoms){

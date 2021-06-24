@@ -1,11 +1,13 @@
 package cargarregistros;
 
 import cargarregistros.gui.GUICargarRegistros;
+import cargarsintomas.utils.SymptomManager;
 
 public class MainRegistros {
     public static void main(String[] args) {
-        GUICargarRegistros registros = new GUICargarRegistros();
-        registros.show();
+        SymptomManager manager = new SymptomManager();
+        GUICargarRegistros registros = new GUICargarRegistros(manager.loadSymptoms());
+
 //        Sintomas sintomas = new Sintomas();
 //        sintomas.add( new Determinante("tos seca"));
 //        sintomas.add( new TomarEnCuenta("Fiebre alta"));

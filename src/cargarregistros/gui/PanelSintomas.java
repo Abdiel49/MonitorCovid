@@ -1,6 +1,5 @@
 package cargarregistros.gui;
 
-import cargarregistros.gui.components.SCheckBox;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
@@ -40,5 +39,11 @@ public class PanelSintomas extends JPanel{
             }
         }
         return s;
+    }
+
+    public void unselect(){
+        for (SCheckBox check : listCheck){
+            check.setSelected(false);
+        }
     }
 }

@@ -1,10 +1,13 @@
 package cargarregistros;
 
 import cargarregistros.utils.FilesManager;
+import cargarregistros.utils.PathProject;
 import monitor.Registro;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -18,14 +21,20 @@ public class RecordsManagerFiles {
 
     private final FilesManager files;
     private final String path;
+    private final String projectDir;
+    private final String filePath;
+    private final String SEPARATOR;
     private final String DELIMETER;
     private final String PATTER;
 
     public RecordsManagerFiles(){
         files = new FilesManager();
-        path = "cargarregistros/registros.csv";
         DELIMETER = ",";
+        path = "cargarregistros/registros.csv";
         PATTER = "EEE MMM dd HH:mm:ss zzz yyyy";
+        SEPARATOR = System.getProperty("file.separator");
+        filePath = "cargarregistros"+SEPARATOR+"registros.csv";
+        projectDir = PathProject.pathFileProject();
     }
 
     public List<String> getRowsData(){
@@ -109,7 +118,6 @@ public class RecordsManagerFiles {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
         return recordData;
     }
 
@@ -137,7 +145,7 @@ public class RecordsManagerFiles {
         } catch (NoSuchFieldException  | IllegalAccessException e){
             e.printStackTrace();
         }
-        System.out.println("Symptom data is:\t"+data);
+//        System.out.println("Symptom data is:\t"+data);
         return data;
     }
 }

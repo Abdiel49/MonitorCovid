@@ -45,6 +45,7 @@ public class GUICargarSintomas extends JFrame{
                 frame.wait();
             } catch (InterruptedException e) {
 //                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
         }
     }
@@ -54,7 +55,7 @@ public class GUICargarSintomas extends JFrame{
     }
 
     private void init(){
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(false);
         this.setSize(ESize.WIDTH.get(),ESize.HEIGHT.get());
         this.setLocationRelativeTo(null);
