@@ -3,9 +3,9 @@
 #cargarsintomas/*.csv
 
 #development data files NOT ignored
-!out/production/MonitorCovid/cargarsintomas/sintomas.csv
-!out/production/MonitorCovid/cargarregistros/registros.csv
-out/
+#!out/production/MonitorCovid/cargarsintomas/sintomas.csv
+#!out/production/MonitorCovid/cargarregistros/registros.csv
+#!out/
 
 # test functionalities
 src/pruebas.java
