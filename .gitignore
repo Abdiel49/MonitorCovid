@@ -11,3 +11,6 @@
 src/pruebas.java
 src/sintomas/EsteNo.java
 src/sintomas/EsteSi.java
+
+#compress
+*.zip
