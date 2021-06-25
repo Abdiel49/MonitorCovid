@@ -99,24 +99,6 @@ public class SymptomManager {
         return sintomas;
     }
 
-    public List<String> getSymptomsDataFile() {
-        List<String> symptoms = readRowsFile();
-        deprecatedSymptoms = new LinkedList<>();
-        for(String s : symptoms){
-            String[] data = s.split(DELIMETER);
-            String className = data[0].replace("class ", "");
-            String value = data[1];
-            String sData = data[0].replace("sintomas.","");
-            if( validateClassNameFile(sData)){
-                symptoms.add(s);
-            }else{
-                deprecatedSymptoms.add(s);
-            }
-//            System.out.println("Symptom data in file is:\t"+s);
-        }
-        return symptoms;
-    }
-
     private List<String> readRowsFile(){
         List<String> list = new LinkedList<>();
         String path = pathProject + symptomsFile;
@@ -129,7 +111,7 @@ public class SymptomManager {
             reader.close();
         }catch (IOException e) {
 //            e.printStackTrace();
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
         }
         return list;
     }
@@ -160,12 +142,12 @@ public class SymptomManager {
         String path = pathProject+symptomsFile;
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-            writer.newLine(); // require?
             writer.write(data);
+            writer.newLine(); // require? YES
             writer.close();
         } catch (IOException e) {
 //            e.printStackTrace();
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
         }
     }
 }

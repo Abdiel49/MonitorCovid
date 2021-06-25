@@ -1,35 +1,27 @@
 package cargarregistros;
 
 import cargarregistros.gui.GUICargarRegistros;
+import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintomas;
 
-import java.util.List;
-
 public class CargarRegistros {
 
     private final Sintomas sintomas;
-    private final Registros registros;
     private final RecordsManagerFiles manager;
     private final GUICargarRegistros gui;
+    private Registros registros;
 
     public CargarRegistros(Sintomas s){
         sintomas = s;
-        registros = new Registros();
         manager = new RecordsManagerFiles();
         gui = new GUICargarRegistros(sintomas);
-        loadRegistros();
+        registros = manager.loadRegistros();
     }
 
     public Registro getRegistro(){
+//        registros = manager.loadRegistros();
         return registros.isEmpty() ? null : registros.peek();
-    }
-
-    private void loadRegistros(){
-        List<String> registrosData = manager.getRowsData();
-        for(String row : registrosData){
-            registros.push(manager.getRegistroFromFile(row));
-        }
     }
 }
