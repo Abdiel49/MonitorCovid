@@ -1,6 +1,6 @@
 package cargarregistros.gui;
 
-import cargarregistros.RecordsManagerFiles;
+import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
 import monitor.Sintomas;
 
@@ -26,8 +26,6 @@ public class GUICargarRegistros extends JFrame{
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
-//                super.windowClosing(we);
-//                System.out.println("Se cerro la ventana de registros");
                 synchronized (frame){
                     frame.notify();
                 }

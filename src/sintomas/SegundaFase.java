@@ -8,6 +8,6 @@ public class SegundaFase extends Sintoma {
     }
     @Override
     public int peso(){
-        return 20;
+        return 50;
     }
 }
