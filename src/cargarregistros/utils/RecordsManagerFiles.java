@@ -1,6 +1,5 @@
 package cargarregistros.utils;
 
-import cargarregistros.utils.PathProject;
 import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintoma;
@@ -20,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class RecordsManagerFiles {
 
@@ -120,14 +120,15 @@ public class RecordsManagerFiles {
     }
 
     private Date parseDate(String cad){
-        Date date = null;
-        DateFormat format = new SimpleDateFormat(PATTER);
+//        Date date = null;
+        SimpleDateFormat format = new SimpleDateFormat(PATTER, Locale.US);
         try{
-            date = format.parse(cad);
+//            date = format.parse(cad);
+            return format.parse(cad);
         }catch (ParseException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             System.err.println(e.getMessage());
         }
-        return date;
+        return null;
     }
 }

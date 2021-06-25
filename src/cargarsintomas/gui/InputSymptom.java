@@ -24,7 +24,7 @@ public class InputSymptom extends JPanel {
     }
 
     private void init(){
-        this.setPreferredSize( new Dimension(ESize.WIDTH.get(), (ESize.HEIGHT.get()-20)));
+        this.setPreferredSize( new Dimension(ESize.WIDTH.get(), (10)));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         inputPanel = new JPanel();
     }

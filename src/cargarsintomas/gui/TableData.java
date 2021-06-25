@@ -1,25 +1,27 @@
 package cargarsintomas.gui;
 
+import monitor.Sintomas;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class TableData extends JTable{
 
-    private final String[] colums;
-//    private final String[][] data;
-//    private JTable table;
+    private String[] columns;
+    private String[][] data;
     private DefaultTableModel model;
 
-    public TableData(){
-        this.colums = new String []{"Tipo","Nombre"};
-//        this.data = new;
-        model = new DefaultTableModel();
-//        table = new JTable(model);
-        initTable();
+    public TableData(Sintomas sintomas){
+        this.columns = new String []{"Tipo","Nombre"};
+        this.data = new String[][]{{"sintoams","tos"},
+                                    {"Primera fase", "Fiebre"}
+        };
+        model = new DefaultTableModel(0,0);
+        model.setColumnIdentifiers(columns);
         this.setModel(model);
-
-        this.setVisible(true);
+//        super(data, colums);
+        initTable();
     }
 
 
@@ -33,17 +35,19 @@ public class TableData extends JTable{
     }
 
     private void addColums(){
-        model.addColumn("Tipo");
-        model.addColumn("Dato");
+//        model.addColumn("Valor");
+//        model.addColumn("Hola");
+//        model.addColumn("Tipo Sintoma");
+        model.insertRow(0, new String[]{"sintoams","tos"});
     }
 
-//    private void addRows(){
-//        for(String[] r : data ){
+    private void addRows(){
+        for(String[] r : data ){
 //            addRowData(r);
-//        }
-//    }
-
-    public void addRowData(String[] row){
-        model.addRow(row);
+        }
     }
+
+//    public void addRowData(String[] row){
+////        model.addRow(row);
+//    }
 }

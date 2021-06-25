@@ -6,6 +6,8 @@ import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintomas;
 
+import java.util.Date;
+
 public class CargarRegistros {
 
     private final Sintomas sintomas;
@@ -21,7 +23,9 @@ public class CargarRegistros {
     }
 
     public Registro getRegistro(){
-//        registros = manager.loadRegistros();
-        return registros.isEmpty() ? null : registros.peek();
+        if(registros == null || registros.isEmpty()){
+            return new Registro(new Date(), new Sintomas());
+        }
+        return registros.peek();
     }
 }
