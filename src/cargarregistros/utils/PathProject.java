@@ -14,14 +14,13 @@ public class PathProject {
         try {
             path = dir.getCanonicalPath();
             dir = new File(path);
-            String files = String.join(DELIMETER,dir.list());
+            String[] dirFiles = dir.list()==null ? new String[]{} : dir.list();
+            String files = String.join(DELIMETER,dirFiles);
             production = files.contains("out");
         } catch (IOException e) {
             e.printStackTrace();
         }
         String testPath = "out"+SEPARATOR+"production"+SEPARATOR+"MonitorCovid"+SEPARATOR;
-        String finalpath = production ? path+SEPARATOR+testPath : path+SEPARATOR;
-//        System.out.println(finalpath);
-        return finalpath;
+        return production ? path+SEPARATOR+testPath : path+SEPARATOR;
     }
 }
