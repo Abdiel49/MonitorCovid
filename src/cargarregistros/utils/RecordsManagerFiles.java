@@ -1,6 +1,5 @@
 package cargarregistros.utils;
 
-import cargarregistros.utils.PathProject;
 import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintoma;
