@@ -97,7 +97,6 @@ public class RecordsManagerFiles {
             o = cons.newInstance(value);
         } catch (ClassNotFoundException | NoSuchMethodException |
             InvocationTargetException | InstantiationException | IllegalAccessException e) {
-//            e.printStackTrace();
             System.err.println(e.getMessage());
         }
         return (Sintoma)o;
@@ -120,13 +119,10 @@ public class RecordsManagerFiles {
     }
 
     private Date parseDate(String cad){
-//        Date date = null;
         SimpleDateFormat format = new SimpleDateFormat(PATTER, Locale.US);
         try{
-//            date = format.parse(cad);
             return format.parse(cad);
         }catch (ParseException e) {
-            e.printStackTrace();
             System.err.println(e.getMessage());
         }
         return null;

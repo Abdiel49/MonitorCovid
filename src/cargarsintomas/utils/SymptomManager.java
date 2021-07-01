@@ -1,6 +1,5 @@
 package cargarsintomas.utils;
 
-import cargarsintomas.utils.Validator;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
@@ -27,7 +26,6 @@ public class SymptomManager {
     private List<String> deprecatedSymptoms;
 
     public SymptomManager(){
-//        files = new FilesManager();
         DELIMETER = ",";
         SEPARATOR = System.getProperty("file.separator");
         symptomsFile = "cargarsintomas"+SEPARATOR+"sintomas.csv";
@@ -55,11 +53,9 @@ public class SymptomManager {
 
     public Vector<String> getSymptomNamesInFile() {
         String path = pathProject+"sintomas/";
-//        System.out.println("path names files is\t"+path);
         File f = new File(path);
         Vector<String> items = new Vector<>();
         String[] fileNames = f.list();
-//        System.out.println(Arrays.toString(fileNames));
         for(String fs : fileNames){
             String fileName = fs.replace(".class","");
             if(validateClassNameFile(fileName)){
@@ -92,7 +88,6 @@ public class SymptomManager {
             String value = data[1];
             String sData = data[0].replace("sintomas.","");
             if( validateClassNameFile(sData)){
-//                symptoms.add(s);
                 sintomas.add(getObjectType(className,value));
             }
         }
@@ -110,8 +105,7 @@ public class SymptomManager {
             }
             reader.close();
         }catch (IOException e) {
-//            e.printStackTrace();
-//            System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return list;
     }
@@ -122,10 +116,8 @@ public class SymptomManager {
             Class<?> cl = Class.forName(className);
             Constructor<?> cons = cl.getConstructor(String.class);
             o = cons.newInstance(value);
-//            System.out.println("Class name\t"+ o.getClass());
         } catch (ClassNotFoundException | NoSuchMethodException |
                 InvocationTargetException | InstantiationException | IllegalAccessException e) {
-//            e.printStackTrace();
             System.err.println(e.getMessage());
         }
         return (Sintoma)o;
@@ -146,8 +138,7 @@ public class SymptomManager {
             writer.newLine(); // require? YES
             writer.close();
         } catch (IOException e) {
-//            e.printStackTrace();
-//            System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }

@@ -1,7 +1,5 @@
 package cargarsintomas.gui;
 
-import cargarsintomas.gui.ESize;
-
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import java.awt.Dimension;

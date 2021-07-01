@@ -20,34 +20,18 @@ public class TableData extends JTable{
         model = new DefaultTableModel(0,0);
         model.setColumnIdentifiers(columns);
         this.setModel(model);
-//        super(data, colums);
         initTable();
     }
 
 
     private void initTable(){
-        // add scroll panel
         this.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane();
         this.setPreferredScrollableViewportSize(new Dimension(250,250));
         addColums();
-//        addRows();
     }
 
     private void addColums(){
-//        model.addColumn("Valor");
-//        model.addColumn("Hola");
-//        model.addColumn("Tipo Sintoma");
         model.insertRow(0, new String[]{"sintoams","tos"});
     }
-
-    private void addRows(){
-        for(String[] r : data ){
-//            addRowData(r);
-        }
-    }
-
-//    public void addRowData(String[] row){
-////        model.addRow(row);
-//    }
 }

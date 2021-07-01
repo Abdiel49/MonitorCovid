@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.DateFormat;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RecordsTitle extends JPanel {
 

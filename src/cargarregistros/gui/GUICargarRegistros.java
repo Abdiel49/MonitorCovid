@@ -22,38 +22,65 @@ public class GUICargarRegistros extends JFrame{
         sintomas = s;
         manager = new RecordsManagerFiles();
         container = Box.createVerticalBox();
-        final GUICargarRegistros frame = this;
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                synchronized (frame){
-                    frame.notify();
-                }
-                frame.setVisible(false);
-                frame.dispose();
-            }
-        });
         init();
+    }
+
+    public void display(){
+        setVisible(true);
+    }
+
+    private void close(){
+        setVisible(false);
+        dispose();
+    }
+
+    private void init(){
+        setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
+        setLocationRelativeTo(null);
+        setResizable(false);
+        above();
+        middle();
+        below();
+        add(container);
+        pack();
+        closeEvent();
+        syncro();
+    }
+
+    private void syncro(){
+        final GUICargarRegistros frame = this;
         synchronized (frame){
-            try{
-                frame.setVisible(true);
+            try {
+                display();
                 frame.wait();
             } catch (InterruptedException e) {
-//                e.printStackTrace();
                 System.err.println(e.getMessage());
             }
         }
     }
 
-    private void init(){
-        this.setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        above();
-        middle();
-        below();
-        this.add(container);
-        this.pack();
+    private void closeEvent(){
+        JButton closeButton = new JButton("Terminar");
+        closeButton.addActionListener(e->closeAction());
+        container.add(closeButton);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                closeAction();
+            }
+        });
+    }
+
+    private void closeAction(){
+        final GUICargarRegistros frame = this;
+        try {
+            synchronized(frame){
+                frame.notify();
+            }
+            close();
+        } catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
     private void above(){

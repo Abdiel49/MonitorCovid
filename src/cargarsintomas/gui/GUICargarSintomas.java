@@ -15,7 +15,7 @@ public class GUICargarSintomas extends JFrame{
 
     private final PanelContainer container;
     private final SymptomManager manager;
-    private InputSymptom inputSymptom;
+    private final InputSymptom inputSymptom;
     private JTable tableData;
     private DefaultTableModel model;
 
@@ -24,55 +24,69 @@ public class GUICargarSintomas extends JFrame{
         manager = new SymptomManager();
         container = new PanelContainer();
         inputSymptom = new InputSymptom(manager.getSymptomNamesInFile());
-        final GUICargarSintomas frame = this;
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                try {
-                    synchronized(frame){
-                        frame.notify();
-                    }
-                    frame.setVisible(false);
-                    frame.dispose();
-                } catch (Exception e){
-                    System.err.println(e.getMessage());
-//                    System.out.println("Error al guardar");
-                }
-//                super.windowClosing(we);
-            }
-        });
         init();
+    }
+
+    public void display(){
+        setVisible(true);
+    }
+
+    private void close(){
+        setVisible(false);
+        dispose();
+    }
+
+    private void init(){
+        setVisible(false);
+        setSize(ESize.WIDTH.get(),ESize.HEIGHT.get());
+        setLocationRelativeTo(null);
+        initContainer();
+        add(container);
+        pack();
+        closeEvent();
+        syncro();
+    }
+
+    private void syncro(){
+        final GUICargarSintomas frame = this;
         synchronized (frame){
             try {
-                frame.setVisible(true);
+                display();
                 frame.wait();
             } catch (InterruptedException e) {
-//                e.printStackTrace();
                 System.err.println(e.getMessage());
             }
         }
     }
 
-    public void display(){
-        this.setVisible(true);
+    private void closeEvent(){
+        JButton closeButton = new JButton("Terminar");
+        closeButton.addActionListener(e->closeAction());
+        container.add(closeButton);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                closeAction();
+            }
+        });
     }
 
-    private void init(){
-//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(false);
-        this.setSize(ESize.WIDTH.get(),ESize.HEIGHT.get());
-        this.setLocationRelativeTo(null);
-        initContainer();
-        this.add(container);
-        this.pack();
+    private void closeAction(){
+        final GUICargarSintomas frame = this;
+        try {
+            synchronized(frame){
+                frame.notify();
+            }
+            close();
+        } catch (Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 
     private void initContainer(){
-//        tableData = new TableData(manager.loadSymptoms());
         JPanel titlePanel = new JPanel();
         JLabel title = new JLabel("Monitoreo de Sintomas");
         titlePanel.add(title);
-//        action button component
         JPanel buttonPanel = new JPanel();
         JButton addSymptom = new JButton("Aniadir");
         addSymptom.addActionListener(e -> addSymptomAction());
@@ -80,14 +94,12 @@ public class GUICargarSintomas extends JFrame{
         container.add(title);
         container.add(inputSymptom);
         container.add(buttonPanel);
-//        container.add(tableData);
         addTableSymptom();
     }
 
     private void addTableSymptom(){
         Sintomas sintomas = manager.loadSymptoms();
         model = new DefaultTableModel();
-        //load table
         model.setColumnIdentifiers(new String []{"Nombre","Tipo"});
         for(Sintoma s : sintomas){
             String type = s.getClass().getName().replace("sintomas.","");
@@ -107,7 +119,7 @@ public class GUICargarSintomas extends JFrame{
         int TYPE = 0, NAME = 1;
         String type = data[TYPE];
         String param = data[NAME];
-        if(param.length()>3){
+        if(param.length()>=3){
             String className = "sintomas."+type;
             Sintoma s = manager.getObjectType(className,param);
             if(! Validator.symptomExists(manager.loadSymptoms(), param)){
