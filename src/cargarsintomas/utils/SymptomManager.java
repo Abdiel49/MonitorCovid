@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Vector;
 
 public class SymptomManager {
@@ -40,7 +41,7 @@ public class SymptomManager {
         try {
             path = dir.getCanonicalPath();
             dir = new File(path);
-            String files = String.join(DELIMETER,dir.list());
+            String files = String.join(DELIMETER, Objects.requireNonNull(dir.list()));
             production = files.contains("out");
         } catch (IOException e) {
             e.printStackTrace();
