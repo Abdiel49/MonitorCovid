@@ -6,7 +6,6 @@ import monitor.Sintoma;
 import monitor.Sintomas;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -16,8 +15,7 @@ public class GUICargarSintomas extends JFrame{
     private final PanelContainer container;
     private final SymptomManager manager;
     private final InputSymptom inputSymptom;
-    private JTable tableData;
-    private DefaultTableModel model;
+    private TableData tableData;
 
     public GUICargarSintomas() {
         super("Cargar Sintomas");
@@ -29,11 +27,6 @@ public class GUICargarSintomas extends JFrame{
 
     public void display(){
         setVisible(true);
-    }
-
-    private void close(){
-        setVisible(false);
-        dispose();
     }
 
     private void init(){
@@ -77,7 +70,8 @@ public class GUICargarSintomas extends JFrame{
             synchronized(frame){
                 frame.notify();
             }
-            close();
+            setVisible(false);
+            dispose();
         } catch (Exception e){
             System.err.println(e.getMessage());
         }
@@ -99,16 +93,9 @@ public class GUICargarSintomas extends JFrame{
 
     private void addTableSymptom(){
         Sintomas sintomas = manager.loadSymptoms();
-        model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String []{"Nombre","Tipo"});
-        for(Sintoma s : sintomas){
-            String type = s.getClass().getName().replace("sintomas.","");
-            String value = s.toString();
-            model.insertRow(0, new String[]{value, type});
-        }
+        tableData = new TableData(sintomas);
         int width = ESize.WIDTH.get()-20;
         int heicht = ESize.HEIGHT.get()/2;
-        tableData = new JTable(model);
         JScrollPane scroll = new JScrollPane(tableData);
         scroll.setPreferredSize(new Dimension(width, heicht));
         container.add(scroll);
@@ -124,11 +111,7 @@ public class GUICargarSintomas extends JFrame{
             Sintoma s = manager.getObjectType(className,param);
             if(! Validator.symptomExists(manager.loadSymptoms(), param)){
                 manager.saveSymptomInFile(s);
-                model.insertRow(0, new String[]{param, type});
-                JOptionPane.showMessageDialog(this,
-                    "Se aniadio Correctamente",
-                    "Nuevo sintoma",
-                    JOptionPane.INFORMATION_MESSAGE);
+                tableData.insertRow(param, type);
             }else{
                 JOptionPane.showMessageDialog(this,
                     "El sintoma ya existe!",

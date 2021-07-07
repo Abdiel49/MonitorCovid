@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Vector;
 
 public class SymptomManager {
@@ -30,26 +29,8 @@ public class SymptomManager {
         DELIMETER = ",";
         SEPARATOR = System.getProperty("file.separator");
         symptomsFile = "cargarsintomas"+SEPARATOR+"sintomas.csv";
-        pathProject = pathFileProject();
+        pathProject = PathProject.pathFileProject();
         sintomas = new Sintomas();
-    }
-
-    private String pathFileProject(){
-        File dir = new File("");
-        boolean production = false;
-        String path="";
-        try {
-            path = dir.getCanonicalPath();
-            dir = new File(path);
-            String files = String.join(DELIMETER, Objects.requireNonNull(dir.list()));
-            production = files.contains("out");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String testPath = "out"+SEPARATOR+"production"+SEPARATOR+"MonitorCovid"+SEPARATOR;
-        String finalpath = production ? path+SEPARATOR+testPath : path+SEPARATOR;
-//        System.out.println(finalpath);
-        return finalpath;
     }
 
     public Vector<String> getSymptomNamesInFile() {
