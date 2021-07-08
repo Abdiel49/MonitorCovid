@@ -12,9 +12,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class SymptomManager {
 
@@ -23,7 +26,6 @@ public class SymptomManager {
     private final String SEPARATOR;
     private final String pathProject;
     private final Sintomas sintomas;
-    private List<String> deprecatedSymptoms;
 
     public SymptomManager(){
         DELIMETER = ",";
@@ -36,13 +38,38 @@ public class SymptomManager {
     public Vector<String> getSymptomNamesInFile() {
         String path = pathProject+"sintomas/";
         File f = new File(path);
-        Vector<String> items = new Vector<>();
         String[] fileNames = f.list();
+        return (fileNames!=null && fileNames.length>0) ? getNamesInFolder(fileNames) : getNamesInJarFile();
+    }
+
+    private Vector<String> getNamesInFolder(String[] fileNames){
+        Vector<String> items = new Vector<>();
         for(String fs : fileNames){
             String fileName = fs.replace(".class","");
             if(validateClassNameFile(fileName)){
                 items.add(fileName);
             }
+        }
+        return items;
+    }
+
+    private Vector<String> getNamesInJarFile(){
+        Vector<String> items = new Vector<>();
+        File homeJar = new File(pathProject+"home.jar");
+        try {
+            JarFile jarFile = new JarFile(homeJar);
+            Enumeration<JarEntry> e = jarFile.entries();
+            while (e.hasMoreElements()){
+                JarEntry jarEntry = e.nextElement();
+                if(jarEntry.getName().startsWith("sintomas/")){
+                    String nameClass = jarEntry.getRealName().replace("sintomas/","");
+                    String data = nameClass.replace(".class","");
+                    System.out.println("data is:\t"+data);
+                    items.add(data);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("No se encontro el archivo Home.jar");
         }
         return items;
     }
@@ -56,10 +83,6 @@ public class SymptomManager {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public List<String> getDeprecatedSymptoms(){
-        return deprecatedSymptoms;
     }
 
     public Sintomas loadSymptoms(){
