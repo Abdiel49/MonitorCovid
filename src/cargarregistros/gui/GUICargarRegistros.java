@@ -15,6 +15,7 @@ public class GUICargarRegistros extends JFrame{
     private final Sintomas sintomas;
     private final Container container;
     private final RecordsManagerFiles manager;
+    private RecordsList recordsList;
     private PanelSintomas panel;
 
     public GUICargarRegistros(Sintomas s){
@@ -25,19 +26,10 @@ public class GUICargarRegistros extends JFrame{
         init();
     }
 
-    public void display(){
-        setVisible(true);
-    }
-
-    private void close(){
-        setVisible(false);
-        dispose();
-    }
-
     private void init(){
         setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
         setLocationRelativeTo(null);
-        setResizable(false);
+//        setResizable(false);
         above();
         middle();
         below();
@@ -45,6 +37,10 @@ public class GUICargarRegistros extends JFrame{
         pack();
         closeEvent();
         syncro();
+    }
+
+    public void display(){
+        setVisible(true);
     }
 
     private void syncro(){
@@ -77,7 +73,8 @@ public class GUICargarRegistros extends JFrame{
             synchronized(frame){
                 frame.notify();
             }
-            close();
+            setVisible(false);
+            dispose();
         } catch (Exception e){
             System.err.println(e.getMessage());
         }
@@ -98,17 +95,17 @@ public class GUICargarRegistros extends JFrame{
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
         container.add(register);
+        recordsList = new RecordsList(manager.loadRegistros());
+        container.add(recordsList);
     }
 
     private void registerSymptoms(){
         Sintomas s = panel.getSymptomsSelected();
         if(s.iterator().hasNext()){
-            manager.saveRecordInFile(new Registro(new Date(), s));
+            Registro r = new Registro(new Date(), s);
+            manager.saveRecordInFile(r);
+            recordsList.addRecord(r);
             panel.unselect();
-            JOptionPane.showMessageDialog(this,
-                "Se a guardado un registro nuevo",
-                "Registro de Sintomas",
-                JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(this,
                 "No se han seleccionado sintomas",

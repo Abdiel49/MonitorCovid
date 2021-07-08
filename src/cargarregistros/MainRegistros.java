@@ -12,6 +12,6 @@ public class MainRegistros {
         sintomas.add(new PrimeraFase("Diarrea"));
         sintomas.add(new PrimeraFase("Dolor de pecho"));
         sintomas.add(new SegundaFase("Temperatura alta"));
-        GUICargarRegistros registros = new GUICargarRegistros(sintomas);
+        new GUICargarRegistros(sintomas);
     }
 }
