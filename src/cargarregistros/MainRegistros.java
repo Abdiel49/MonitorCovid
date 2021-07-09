@@ -10,7 +10,7 @@ public class MainRegistros {
         Sintomas sintomas = new Sintomas();
         sintomas.add(new PrimeraFase("Tos Seca"));
         sintomas.add(new PrimeraFase("Diarrea"));
-        sintomas.add(new PrimeraFase("Dolor de pecho"));
+        sintomas.add(new SegundaFase("Dolor de pecho"));
         sintomas.add(new SegundaFase("Temperatura alta"));
         new GUICargarRegistros(sintomas);
     }

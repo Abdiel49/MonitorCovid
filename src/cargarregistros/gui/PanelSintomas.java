@@ -18,7 +18,7 @@ public class PanelSintomas extends JPanel{
     public PanelSintomas(Sintomas s){
         symptoms = s;
         listCheck = new LinkedList<>();
-        this.setPreferredSize( new Dimension(Constants.WIDTH.get()/2, Constants.HEIGHT.get()) );
+        this.setPreferredSize( new Dimension(Constants.WIDTH.get()/3, Constants.HEIGHT.get()) );
         this.setLayout(new BoxLayout( this, BoxLayout.Y_AXIS));
         initList();
     }

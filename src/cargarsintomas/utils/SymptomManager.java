@@ -64,7 +64,7 @@ public class SymptomManager {
                 if(jarEntry.getName().startsWith("sintomas/")){
                     String nameClass = jarEntry.getRealName().replace("sintomas/","");
                     String data = nameClass.replace(".class","");
-                    System.out.println("data is:\t"+data);
+//                    System.out.println("data is:\t"+data);
                     items.add(data);
                 }
             }
