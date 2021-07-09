@@ -80,7 +80,7 @@ public class RecordsList extends JPanel {
     }
 
     private void loadDataRecord(int index){
-        if (index <= sortedListRecord.size()-1 ){
+        if (index <= sortedListRecord.size() && sortedListRecord.size() > 0 ){
             Sintomas sintomas = sortedListRecord.get(index).getSintomas();
             dataModel.setRowCount(0);
             for(Sintoma s : sintomas){

@@ -30,7 +30,7 @@ public class SymptomManager {
     public SymptomManager(){
         DELIMETER = ",";
         SEPARATOR = System.getProperty("file.separator");
-        symptomsFile = "cargarsintomas"+SEPARATOR+"sintomas.csv";
+        symptomsFile = /*"cargarsintomas"+SEPARATOR+*/"sintomas.csv";
         pathProject = PathProject.pathFileProject();
         sintomas = new Sintomas();
     }

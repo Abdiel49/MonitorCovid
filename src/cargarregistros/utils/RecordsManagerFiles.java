@@ -34,7 +34,7 @@ public class RecordsManagerFiles {
         DELIMETER = ",";
         PATTER = "EEE MMM dd HH:mm:ss zzz yyyy";
         SEPARATOR = System.getProperty("file.separator");
-        filePath = "cargarregistros"+SEPARATOR+"registros.csv";
+        filePath = /*"cargarregistros"+SEPARATOR+*/"registros.csv";
         projectDir = PathProject.pathFileProject();
     }
 
