@@ -17,3 +17,7 @@ src/sintomas/EsteSi.java
 
 # csv data
 *.csv
+
+# jars
+out/production/MonitorCovid/*.jar
+
