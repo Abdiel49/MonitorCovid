@@ -17,7 +17,7 @@ public class PhaseControl implements Notifier {
     private List<Registro> recordsList;
     private int firstCount;
     private int secondCount;
-    private final Registros registros;
+    private Registros registros;
     private boolean isSecondPhase;
     private boolean isFirstPhase;
     private final List<Observer> observers;
@@ -25,8 +25,8 @@ public class PhaseControl implements Notifier {
     private Registro auxRegistro;
     private int days;
 
-    public PhaseControl(Registros r){
-        registros = r;
+    public PhaseControl(){
+//        registros = r;
         data = new LoadData(registros);
         isSecondPhase = false;
         isFirstPhase = false;
@@ -47,6 +47,10 @@ public class PhaseControl implements Notifier {
         for(Registro r : registros){
             phaseControl(r);
         }
+    }
+
+    public void addRegistros(Registros r){
+        registros = r;
     }
 
     public void phaseControl(Registro r){

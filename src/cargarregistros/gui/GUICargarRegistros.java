@@ -1,5 +1,8 @@
 package cargarregistros.gui;
 
+import cargarregistros.courier.Message;
+import cargarregistros.courier.Observer;
+import cargarregistros.phasecontrol.PhaseControl;
 import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
 import monitor.Sintomas;
@@ -10,11 +13,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
-public class GUICargarRegistros extends JFrame{
+public class GUICargarRegistros extends JFrame implements Observer {
 
     private final Sintomas sintomas;
     private final Container container;
     private final RecordsManagerFiles manager;
+    private final PhaseControl phaseControl;
     private RecordsList recordsList;
     private PanelSintomas panel;
 
@@ -23,10 +27,12 @@ public class GUICargarRegistros extends JFrame{
         sintomas = s;
         manager = new RecordsManagerFiles();
         container = Box.createVerticalBox();
+        phaseControl = new PhaseControl();
         init();
     }
 
     private void init(){
+        phaseControl.subscribe(this);
         setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
         setLocationRelativeTo(null);
 //        setResizable(false);
@@ -112,5 +118,10 @@ public class GUICargarRegistros extends JFrame{
                 "Registro de Sintomas",
                 JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    @Override
+    public void mailBox(Message m) {
+        
     }
 }
