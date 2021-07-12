@@ -1,2 +1,2 @@
 Main-Class: Main
-Class-Path: . cargarregistros.jar cargarsintomas.jar diagnosticos/ sintomas/ monitor/
+Class-Path: . cargarregistros.jar cargarsintomas.jar monitor sintomas diagnosticos

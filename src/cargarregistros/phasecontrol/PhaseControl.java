@@ -1,5 +1,8 @@
 package cargarregistros.phasecontrol;
 
+import cargarregistros.courier.Message;
+import cargarregistros.courier.Notifier;
+import cargarregistros.courier.Observer;
 import monitor.Registro;
 import monitor.Registros;
 import monitor.Sintoma;
@@ -9,59 +12,72 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PhaseControl {
+public class PhaseControl implements Notifier {
 
-    private final Registros registros;
     private List<Registro> recordsList;
-    private Sintomas firstPhase;
-    private Sintomas secondPhase;
     private int firstCount;
     private int secondCount;
+    private final Registros registros;
     private boolean isSecondPhase;
-    private final int PERCENTAGE_SYMTOMS = 50;
+    private boolean isFirstPhase;
+    private final List<Observer> observers;
+    private final LoadData data;
+    private Registro auxRegistro;
+    private int days;
 
     public PhaseControl(Registros r){
         registros = r;
-        firstPhase = new Sintomas();
-        secondPhase = new Sintomas();
-        firstCount = 0;
-        secondCount = 0;
+        data = new LoadData(registros);
         isSecondPhase = false;
+        isFirstPhase = false;
         recordsList = new LinkedList<>();
-        loadRecordPhases();
+        observers = new LinkedList<>();
+        days = 0;
+        init();
     }
 
-    private void loadRecordPhases(){
+    private void init(){
+        auxRegistro = null;
+        firstCount = data.fisrtPhaseSize();
+        secondCount = data.secondPhaseSize();
+        loadPhaseControl();
+    }
+
+    private void loadPhaseControl(){
         for(Registro r : registros){
-            recordsList.add(0,r);
-            Sintomas s = r.getSintomas();
-            loadSymptomsPhases(s);
+            phaseControl(r);
         }
     }
 
-    private void loadSymptomsPhases(Sintomas sintomas){
-        for(Sintoma s : sintomas){
-            String phaseName = s.getClass().getSimpleName();
-            switch (phaseName){
-                case "PrimeraFase" -> {
-                    firstPhase.add(s);
-                    firstCount++;
-                }
-                case "SegundaFase" -> {
-                    secondPhase.add(s);
-                    secondCount++;
-                }
+    public void phaseControl(Registro r){
+        if(percentageSymptoms(r)){
+            if(auxRegistro != null){
+                if(differenceDays(auxRegistro, r) != 1) days = 0;
             }
+            days++;
+            evaluatePhase(days);
         }
     }
 
-    public void phaseControl(){
-        for (int i = 0; i < recordsList.size()-1 ; i++) {
-            Registro r1 = recordsList.get(i);
-            Registro r2 = recordsList.get(i+1);
-            if(differenceDays(r1,r2) == 1){
+    private void evaluatePhase(int days){
+        isFirstPhase = days > 0 && days < Constants.START_SECOND_PHASE;
+        isSecondPhase = days >= Constants.START_SECOND_PHASE;
+        if(isFirstPhase) managerFirstPhase();
+        if(isSecondPhase) managerSecondPhase();
+    }
 
-            }
+    private void managerFirstPhase(){
+        switch (days){
+            case 1 -> sendMessage(Message.FIRST_PHASE);
+            case 2 -> sendMessage(Message.MEDICAL_APPOINTMENT);
+            case 3 -> sendMessage(Message.TEST);
+        }
+    }
+
+    private void managerSecondPhase(){
+        switch (days){
+            case 4 -> sendMessage(Message.SECOND_PHASE);
+            case 5 -> sendMessage(Message.U_MEDICAL_APPOINTMENT);
         }
     }
 
@@ -71,19 +87,17 @@ public class PhaseControl {
         Calendar c2 = Calendar.getInstance();
         c1.setTime(f.getFecha());
         c2.setTime(s.getFecha());
-        int days = c2.get(Calendar.DAY_OF_MONTH) - c1.get(Calendar.DAY_OF_MONTH);
-        return Math.abs(days);
+//        int daysDifference = c2.get(Calendar.DAY_OF_MONTH) - c1.get(Calendar.DAY_OF_MONTH);
+//        return Math.abs(daysDifference); // use this for integration
+        return 1; // for test code
     }
 
     private boolean percentageSymptoms(Registro r){
         Sintomas sintomas = r.getSintomas();
         int[] phases = countPhases(sintomas);
-        if(!isSecondPhase){ // first phase
-            isMoreThanThePercentage(phases[0]);
-        }else{ // second phase
-            isMoreThanThePercentage(phases[1]);
-        }
-        return false;
+        return isSecondPhase ?
+                isMoreThanThePercentage(phases[1]) :
+                isMoreThanThePercentage(phases[0]);
     }
 
     private int[] countPhases(Sintomas sintomas){
@@ -100,7 +114,19 @@ public class PhaseControl {
 
     private boolean isMoreThanThePercentage(int items){
         int sizeList = isSecondPhase ? secondCount : firstCount;
-        double percent = (sizeList * PERCENTAGE_SYMTOMS)/100.0;
+        double percent = (sizeList * Constants.PERCENTAGE_SYMTOMS)/100.0;
         return items >= percent;
+    }
+
+    @Override
+    public void sendMessage(Message m) {
+        for(Observer o : observers) {
+            o.mailBox(m);
+        }
+    }
+
+    @Override
+    public void subscribe(Observer o) {
+        observers.add(o);
     }
 }
