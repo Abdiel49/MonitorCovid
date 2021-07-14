@@ -2,7 +2,6 @@ package diagnosticos;
 
 import monitor.*;
 
-
 import java.util.Calendar;
 
 public class DiagnosticoPorFases extends FuncionDiagnostico {

@@ -33,5 +33,8 @@ public class Monitor {
         return resultadoDiagnostico;
     }
 
+    private void guardarEstado(int diagnostico){
+        
+    }
 
 }

@@ -12,17 +12,16 @@ public class CargarRegistros {
 
     private final Sintomas sintomas;
     private final RecordsManagerFiles manager;
-    private final GUICargarRegistros gui;
+    private GUICargarRegistros gui;
     private Registros registros;
 
     public CargarRegistros(Sintomas s){
         sintomas = s;
         manager = new RecordsManagerFiles();
-        gui = new GUICargarRegistros(sintomas);
-        registros = manager.loadRegistros();
     }
 
     public Registro getRegistro(){
+        displayGUI();
         if(registros == null || registros.isEmpty()){
             return new Registro(new Date(), new Sintomas());
         }
@@ -30,6 +29,12 @@ public class CargarRegistros {
     }
 
     public Registros getRegistros(){
+        displayGUI();
         return registros;
+    }
+
+    private void displayGUI(){
+        gui = new GUICargarRegistros(sintomas);
+        registros = manager.loadRegistros();
     }
 }
