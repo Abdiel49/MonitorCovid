@@ -28,4 +28,8 @@ public class CargarRegistros {
         }
         return registros.peek();
     }
+
+    public Registros getRegistros(){
+        return registros;
+    }
 }

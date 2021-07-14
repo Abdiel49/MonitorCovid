@@ -1,8 +1,5 @@
 package cargarregistros.gui;
 
-import cargarregistros.courier.Message;
-import cargarregistros.courier.Observer;
-import cargarregistros.phasecontrol.PhaseControl;
 import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
 import monitor.Sintomas;
@@ -13,26 +10,29 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 
-public class GUICargarRegistros extends JFrame implements Observer {
+public class GUICargarRegistros extends JFrame {
 
     private final Sintomas sintomas;
     private final Container container;
     private final RecordsManagerFiles manager;
-    private final PhaseControl phaseControl;
     private RecordsList recordsList;
     private PanelSintomas panel;
+    private boolean isSecondPhase;
+    private boolean isFirstPhase;
+    private JPanel alertPanel;
 
     public GUICargarRegistros(Sintomas s){
         super("Cargar Registros");
         sintomas = s;
         manager = new RecordsManagerFiles();
         container = Box.createVerticalBox();
-        phaseControl = new PhaseControl();
+        isFirstPhase = false;
+        isSecondPhase = false;
+        alertPanel = new JPanel();
         init();
     }
 
     private void init(){
-        phaseControl.subscribe(this);
         setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
         setLocationRelativeTo(null);
 //        setResizable(false);
@@ -97,6 +97,10 @@ public class GUICargarRegistros extends JFrame implements Observer {
         container.add(scroll);
     }
 
+    private void makeAlertPanel(){
+
+    }
+
     private void below(){
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
@@ -118,10 +122,5 @@ public class GUICargarRegistros extends JFrame implements Observer {
                 "Registro de Sintomas",
                 JOptionPane.WARNING_MESSAGE);
         }
-    }
-
-    @Override
-    public void mailBox(Message m) {
-        
     }
 }

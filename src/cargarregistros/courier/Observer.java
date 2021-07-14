@@ -1,5 +1,5 @@
 package cargarregistros.courier;
 
-public interface Observer {
+ interface Observer {
     void mailBox(Message m);
 }

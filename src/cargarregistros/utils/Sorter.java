@@ -1,7 +1,9 @@
 package cargarregistros.utils;
 
-public class Sorter {
+import monitor.Sintomas;
 
+public class Sorter {
+//    private final Sintomas sintomas;
     public Sorter(){
 
     }

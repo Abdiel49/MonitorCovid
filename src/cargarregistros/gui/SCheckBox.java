@@ -10,16 +10,10 @@ public class SCheckBox extends JCheckBox {
 
     public SCheckBox(Sintoma s){
         symptom = s;
-        String text = getType()+" - "+s.toString();
+//        String type = s.getClass().getSimpleName();
+        String text = s.toString();
         this.setText(text);
         this.setFocusable(false);
-    }
-
-    private String getType(){
-        String name = symptom.getClass().getName();
-        String lowerCase = name.replace("sintomas.", "").toLowerCase();
-        String normal = lowerCase.replace("fase", " fase");
-        return normal.toUpperCase();
     }
 
     public Sintoma getSymptom(){

@@ -14,10 +14,12 @@ public class PanelSintomas extends JPanel{
 
     private final List<SCheckBox> listCheck;
     private final Sintomas symptoms;
+    private boolean isSecondPhase;
 
     public PanelSintomas(Sintomas s){
         symptoms = s;
         listCheck = new LinkedList<>();
+        isSecondPhase = false;
         this.setPreferredSize( new Dimension(Constants.WIDTH.get()/3, Constants.HEIGHT.get()) );
         this.setLayout(new BoxLayout( this, BoxLayout.Y_AXIS));
         initList();
@@ -25,9 +27,14 @@ public class PanelSintomas extends JPanel{
 
     private void initList(){
         for (Sintoma s : symptoms){
-            SCheckBox check = new SCheckBox(s);
-            listCheck.add(check);
-            this.add(check);
+            if(!isSecondPhase){
+                String phaseName = s.getClass().getSimpleName();
+                if(!phaseName.equals("SegundaFase")){
+                    SCheckBox check = new SCheckBox(s);
+                    listCheck.add(check);
+                    this.add(check);
+                }
+            }
         }
     }
 
@@ -44,6 +51,17 @@ public class PanelSintomas extends JPanel{
     public void unselect(){
         for (SCheckBox check : listCheck){
             check.setSelected(false);
+        }
+    }
+
+    public void changeToSecondPhase(){
+        isSecondPhase = true;
+        listCheck.clear();
+        this.removeAll();
+        for (Sintoma s : symptoms){
+            SCheckBox check = new SCheckBox(s);
+            listCheck.add(check);
+            this.add(check);
         }
     }
 }

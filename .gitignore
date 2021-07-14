@@ -21,3 +21,6 @@ src/sintomas/EsteSi.java
 # jars
 out/production/MonitorCovid/*.jar
 
+#intellij idea
+
+.idea/

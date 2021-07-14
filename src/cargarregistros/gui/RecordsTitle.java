@@ -31,7 +31,7 @@ public class RecordsTitle extends JPanel {
     }
 
     private String getToDayFormated(){
-        String PATTER = "dd MMM yyyy HH:mm";
+        String PATTER = "dd MMM yyyy HH:mm:ss";
         DateFormat formated = new SimpleDateFormat(PATTER);
         return formated.format(new Date());
     }
