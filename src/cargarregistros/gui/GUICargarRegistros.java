@@ -105,17 +105,16 @@ public class GUICargarRegistros extends JFrame {
     }
 
     private void registerSymptoms(){
+        panel.printLocale();
         Sintomas s = panel.getSymptomsSelected();
         if(s.iterator().hasNext()){
             Registro r = new Registro(new Date(), s);
             manager.saveRecordInFile(r);
             recordsList.addRecord(r);
             panel.unselect();
+            alertPanel.setMessage("Se a guardado el registro",AlertPanel.GREEN);
         }else{
-            JOptionPane.showMessageDialog(this,
-                "No se han seleccionado sintomas",
-                "Registro de Sintomas",
-                JOptionPane.WARNING_MESSAGE);
+            alertPanel.setMessage("No de an seleccionado sintomas!",AlertPanel.RED);
         }
     }
 }

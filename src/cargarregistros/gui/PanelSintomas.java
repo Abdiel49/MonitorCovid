@@ -3,8 +3,8 @@ package cargarregistros.gui;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Dimension;
 import java.util.LinkedList;
@@ -15,43 +15,48 @@ public class PanelSintomas extends JPanel{
     private final List<SCheckBox> listCheck;
     private final Sintomas symptoms;
     private boolean isSecondPhase;
+    private SymptomTableModel model;
+    private SymptomTableCheck table;
 
     public PanelSintomas(Sintomas s){
         symptoms = s;
         listCheck = new LinkedList<>();
         isSecondPhase = false;
+        model = new SymptomTableModel();
+        table = new SymptomTableCheck();
         this.setPreferredSize( new Dimension(Constants.WIDTH.get()/3, Constants.HEIGHT.get()) );
         this.setLayout(new BoxLayout( this, BoxLayout.Y_AXIS));
-        initList();
+        init();
+//        initList();
     }
 
-    private void initList(){
-        for (Sintoma s : symptoms){
-            if(!isSecondPhase){
-                String phaseName = s.getClass().getSimpleName();
-                if(!phaseName.equals("SegundaFase")){
-                    SCheckBox check = new SCheckBox(s);
-                    listCheck.add(check);
-                    this.add(check);
-                }
-            }
+    private void init(){
+        model.setColumnIdentifiers(new String []{"Nombre","Tipo", "Seleccionar"});
+        table.setModel(model);
+        loadTableSymtoms();
+        JScrollPane scroll = new JScrollPane(table);
+        add(scroll);
+    }
+
+    private void loadTableSymtoms(){
+        for(Sintoma s : symptoms){
+            model.insertSymptom(s);
+        }
+    }
+
+    public void printLocale(){
+        Sintomas ss = model.getSelectedSymptoms();
+        for(Sintoma s : ss){
+            System.out.println(s.toString());
         }
     }
 
     public Sintomas getSymptomsSelected(){
-        Sintomas s = new Sintomas();
-        for (SCheckBox check : listCheck){
-            if(check.isSelected()){
-                s.add(check.getSymptom());
-            }
-        }
-        return s;
+        return model.getSelectedSymptoms();
     }
 
     public void unselect(){
-        for (SCheckBox check : listCheck){
-            check.setSelected(false);
-        }
+        model.unselectItems();
     }
 
     public void changeToSecondPhase(){
@@ -63,5 +68,9 @@ public class PanelSintomas extends JPanel{
             listCheck.add(check);
             this.add(check);
         }
+    }
+
+    public void insertRow(String param, String type){
+        model.insertRow(0, new Object[]{param,type,false});
     }
 }

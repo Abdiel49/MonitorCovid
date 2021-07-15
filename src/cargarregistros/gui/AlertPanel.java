@@ -26,6 +26,7 @@ public class AlertPanel extends JPanel {
         f = message.getFont();
         message.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
         add(phase);
+        add(new JLabel("   -   ")); // separator
         add(message);
     }
 
