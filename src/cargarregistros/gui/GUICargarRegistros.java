@@ -36,9 +36,7 @@ public class GUICargarRegistros extends JFrame {
         setSize(Constants.WIDTH.get(),Constants.HEIGHT.get());
         setLocationRelativeTo(null);
 //        setResizable(false);
-        above();
-        middle();
-        below();
+        buildRecordsGui();
         add(container);
         pack();
         closeEvent();
@@ -86,22 +84,17 @@ public class GUICargarRegistros extends JFrame {
         }
     }
 
-    private void above(){
+    private void buildRecordsGui(){
+        // above
         RecordsTitle title = new RecordsTitle();
         container.add(title);
-    }
-
-    private void middle(){
+        // middle
         panel = new PanelSintomas(sintomas);
         JScrollPane scroll = new JScrollPane(panel);
         container.add(scroll);
-    }
+        // alert panel
 
-    private void makeAlertPanel(){
-
-    }
-
-    private void below(){
+        // below
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
         container.add(register);
