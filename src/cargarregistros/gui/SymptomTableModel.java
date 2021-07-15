@@ -21,7 +21,6 @@ public class SymptomTableModel extends DefaultTableModel {
         String type = s.getClass().getSimpleName();
         String value = s.toString();
         Object[] data = new Object[]{value, type, false};
-//        insertRow(0, data);
         addRow(data);
     }
 

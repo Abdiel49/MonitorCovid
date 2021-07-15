@@ -1,33 +1,30 @@
 package cargarregistros.gui;
 
+import monitor.Fase;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 
 import java.awt.Dimension;
-import java.util.LinkedList;
-import java.util.List;
 
 public class PanelSintomas extends JPanel{
 
-    private final List<SCheckBox> listCheck;
     private final Sintomas symptoms;
     private boolean isSecondPhase;
-    private SymptomTableModel model;
-    private SymptomTableCheck table;
+    private final SymptomTableModel model;
+    private final SymptomTableCheck table;
 
     public PanelSintomas(Sintomas s){
         symptoms = s;
-        listCheck = new LinkedList<>();
         isSecondPhase = false;
         model = new SymptomTableModel();
         table = new SymptomTableCheck();
         this.setPreferredSize( new Dimension(Constants.WIDTH.get()/3, Constants.HEIGHT.get()) );
         this.setLayout(new BoxLayout( this, BoxLayout.Y_AXIS));
         init();
-//        initList();
     }
 
     private void init(){
@@ -39,15 +36,10 @@ public class PanelSintomas extends JPanel{
     }
 
     private void loadTableSymtoms(){
-        for(Sintoma s : symptoms){
-            model.insertSymptom(s);
-        }
-    }
-
-    public void printLocale(){
-        Sintomas ss = model.getSelectedSymptoms();
+        Sintomas ss = isSecondPhase ? symptoms :
+            symptoms.getSintomasFase(new Fase("PrimeraFase"));
         for(Sintoma s : ss){
-            System.out.println(s.toString());
+            model.insertSymptom(s);
         }
     }
 
@@ -61,16 +53,12 @@ public class PanelSintomas extends JPanel{
 
     public void changeToSecondPhase(){
         isSecondPhase = true;
-        listCheck.clear();
-        this.removeAll();
-        for (Sintoma s : symptoms){
-            SCheckBox check = new SCheckBox(s);
-            listCheck.add(check);
-            this.add(check);
-        }
-    }
-
-    public void insertRow(String param, String type){
-        model.insertRow(0, new Object[]{param,type,false});
+//        listCheck.clear();
+//        this.removeAll();
+//        for (Sintoma s : symptoms){
+//            SCheckBox check = new SCheckBox(s);
+//            listCheck.add(check);
+//            this.add(check);
+//        }
     }
 }

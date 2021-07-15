@@ -105,7 +105,6 @@ public class GUICargarRegistros extends JFrame {
     }
 
     private void registerSymptoms(){
-        panel.printLocale();
         Sintomas s = panel.getSymptomsSelected();
         if(s.iterator().hasNext()){
             Registro r = new Registro(new Date(), s);
