@@ -34,7 +34,12 @@ public class Monitor {
     }
 
     private void guardarEstado(int diagnostico){
-        
+        if(diagnostico>=13) {
+            fase.setNombre("SegundaFase");
+        } else {
+            fase.setNombre("PrimeraFase");
+        }
+        fase.setDia(diagnostico);
+        (new DatosFase()).guardarDatosFase(fase);
     }
-
 }

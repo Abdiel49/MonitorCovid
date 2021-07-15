@@ -93,8 +93,8 @@ public class GUICargarRegistros extends JFrame {
         JScrollPane scroll = new JScrollPane(panel);
         container.add(scroll);
         // alert panel
-        alertPanel.setPhase("Primera Fase");
-        alertPanel.setMessage("Mensaje de Prueba");
+        alertPanel.setPhase("Primera Fase",AlertPanel.GREEN);
+        alertPanel.setMessage("Mensaje de Prueba", AlertPanel.ORANGE);
         container.add(alertPanel);
         // below
         JButton register = new JButton("Guardar Registro");
