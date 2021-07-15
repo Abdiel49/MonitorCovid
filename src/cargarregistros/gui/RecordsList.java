@@ -58,8 +58,10 @@ public class RecordsList extends JPanel {
     }
 
     public void addRecord(Registro r){
+        recordJList.setSelectedIndex(0);
         listModel.add(0, r.getFecha().toString());
         sortedListRecord.add(0,r);
+        recordJList.setSelectedIndex(0);
     }
 
     private void addActionList(){
