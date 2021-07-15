@@ -15,11 +15,11 @@ public class GUICargarRegistros extends JFrame {
     private final Sintomas sintomas;
     private final Container container;
     private final RecordsManagerFiles manager;
+    private AlertPanel alertPanel;
     private RecordsList recordsList;
     private PanelSintomas panel;
     private boolean isSecondPhase;
     private boolean isFirstPhase;
-    private JPanel alertPanel;
 
     public GUICargarRegistros(Sintomas s){
         super("Cargar Registros");
@@ -28,7 +28,7 @@ public class GUICargarRegistros extends JFrame {
         container = Box.createVerticalBox();
         isFirstPhase = false;
         isSecondPhase = false;
-        alertPanel = new JPanel();
+        alertPanel = new AlertPanel();
         init();
     }
 
@@ -93,7 +93,9 @@ public class GUICargarRegistros extends JFrame {
         JScrollPane scroll = new JScrollPane(panel);
         container.add(scroll);
         // alert panel
-
+        alertPanel.setPhase("Primera Fase");
+        alertPanel.setMessage("Mensaje de Prueba");
+        container.add(alertPanel);
         // below
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
