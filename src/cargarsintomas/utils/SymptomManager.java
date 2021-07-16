@@ -30,7 +30,7 @@ public class SymptomManager {
     public SymptomManager(){
         DELIMETER = ",";
         SEPARATOR = System.getProperty("file.separator");
-        symptomsFile = /*"cargarsintomas"+SEPARATOR+*/"AbdielOrellanasintomas.csv";
+        symptomsFile = /*"cargarsintomas"+SEPARATOR+*/"Abdiel-sintomas.csv";
         pathProject = PathProject.pathFileProject();
         sintomas = new Sintomas();
     }
@@ -103,14 +103,17 @@ public class SymptomManager {
         List<String> list = new LinkedList<>();
         String path = pathProject + symptomsFile;
         try {
-            BufferedReader reader = Files.newBufferedReader( Paths.get( path ));
-            String line;
-            while( (line = reader.readLine()) != null ){
-                if(line.length()>0) list.add(line);
+            if(fileExists()){
+                BufferedReader reader = Files.newBufferedReader( Paths.get( path ));
+                String line;
+                while( (line = reader.readLine()) != null ){
+                    if(line.length()>0) list.add(line);
+                }
+                reader.close();
             }
-            reader.close();
         }catch (IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+//            System.err.println(e.getMessage());
         }
         return list;
     }
@@ -143,7 +146,13 @@ public class SymptomManager {
             writer.newLine(); // require? YES
             writer.close();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    private boolean fileExists(){
+        File f = new File(pathProject+symptomsFile);
+        return f.exists();
     }
 }

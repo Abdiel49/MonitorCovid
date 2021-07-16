@@ -24,3 +24,7 @@ out/production/MonitorCovid/*.jar
 #intellij idea
 
 .idea/
+
+# libreries
+
+lib/

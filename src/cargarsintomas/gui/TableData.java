@@ -16,6 +16,7 @@ public class TableData extends JTable{
         model = new DefaultTableModel();
         initTable();
         loadTable();
+        setAutoCreateRowSorter(true);
     }
 
     private void initTable(){

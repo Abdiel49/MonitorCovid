@@ -8,6 +8,7 @@ import monitor.Sintomas;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -34,7 +35,7 @@ public class RecordsManagerFiles {
         DELIMETER = ",";
         PATTER = "EEE MMM dd HH:mm:ss zzz yyyy";
         SEPARATOR = System.getProperty("file.separator");
-        filePath = /*"cargarregistros"+SEPARATOR+*/"AbdielOrellanaregistros.csv";
+        filePath = /*"cargarregistros"+SEPARATOR+*/"Abdiel-registros.csv";
         projectDir = PathProject.pathFileProject();
     }
 
@@ -48,7 +49,6 @@ public class RecordsManagerFiles {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println(e.getMessage());
         }
     }
 
@@ -96,7 +96,8 @@ public class RecordsManagerFiles {
             o = cons.newInstance(value);
         } catch (ClassNotFoundException | NoSuchMethodException |
             InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         return (Sintoma)o;
     }
@@ -105,14 +106,17 @@ public class RecordsManagerFiles {
         List <String> data = new LinkedList<>();
         String path = projectDir+filePath;
         try {
-            BufferedReader reader = Files.newBufferedReader( Paths.get( path ));
-            String line;
-            while( (line = reader.readLine()) != null ){
-                if(line.length()>5) data.add(line);
+            if (fileExists()){
+                BufferedReader reader = Files.newBufferedReader( Paths.get( path ));
+                String line;
+                while( (line = reader.readLine()) != null ){
+                    if(line.length()>5) data.add(line);
+                }
+                reader.close();
             }
-            reader.close();
         }catch (IOException e) {
-            System.err.println(e.getMessage());
+//            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         return data;
     }
@@ -125,6 +129,11 @@ public class RecordsManagerFiles {
             System.err.println(e.getMessage());
         }
         return null;
+    }
+
+    private boolean fileExists(){
+        File f = new File(projectDir+filePath);
+        return f.exists();
     }
 }
     

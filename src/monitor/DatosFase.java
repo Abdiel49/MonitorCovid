@@ -2,73 +2,87 @@ package monitor;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class DatosFase {
-    private String getPath(){
-        File miDir = new File (".");
-        String dir="", path, separador = System.getProperty("file.separator");
-        try {
-            dir= miDir.getCanonicalPath();
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
 
-        boolean esDesarrollo = false;
-        File file2 = new File(dir);
-        String[] a = file2.list();
+    private final String pathFileName;
+    private final String DELIMETER = ",";
 
-        assert a != null;
-        for (String s : a) {
-            if (s.equals("src")) {
-                esDesarrollo = true;
-                break;
-            }
-        }
-
-        String nombreArchivo = "fase.dat";
-        if ( !esDesarrollo ){
-            path = dir+separador+  nombreArchivo;
-        } else {
-            path = dir+separador+"src"+separador+  nombreArchivo;
-        }
-        return path;
+    public DatosFase(){
+        pathFileName = pathFileProject() + "Abdiel-fase.csv";
     }
 
-    public Fase leerDatosFase() {
-        Fase fase = null;
+    private String pathFileProject(){
+        File dir = new File("");
+        String SEPARATOR = System.getProperty("file.separator");
+        boolean production = false;
+        String path=".";
         try {
-            if (existeDatosFase()){
-                ObjectInputStream file = new ObjectInputStream(new FileInputStream(getPath()));
-                fase = (Fase) file.readObject();
-                file.close();
-            } else {
-                fase = new Fase("PrimeraFase");
+            path = dir.getCanonicalPath();
+            dir = new File(path);
+            if(dir.list() != null){
+                String[] dirFiles = dir.list();
+                String files = String.join(DELIMETER,dirFiles);
+                production = files.contains("out");
             }
-        } catch (ClassNotFoundException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        }
+        String testPath = "out"+SEPARATOR+"production"+SEPARATOR+"MonitorCovid"+SEPARATOR;
+        return production ? path+SEPARATOR+testPath : path+SEPARATOR;
+    }
+
+    public Fase readFaseData(){
+        Fase fase = new Fase();
+        String[] data = new String[]{};
+        try{
+            if(fileExists()){
+                BufferedReader reader = Files.newBufferedReader(Paths.get(pathFileName));
+                String line;
+                while( (line = reader.readLine()) != null ){
+                    if(line.length()> 5){
+                        data = line.split(DELIMETER);
+                    }
+                }
+                reader.close();
+                fase = parseData(data);
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return fase;
     }
 
-    public boolean existeDatosFase(){
-        File f = new File(getPath());
+    private Fase parseData(String[] data){
+        Fase f = new Fase();
+        if(data.length==2){
+            int NAME=0, DAY=1;
+            f.setNombre(data[NAME]);
+            f.setDia(Integer.parseInt(data[DAY]));
+        }
+        return f;
+    }
+
+    private boolean fileExists(){
+        File f = new File(pathFileName);
         return f.exists();
     }
 
-    public void guardarDatosFase(Fase fase){
+    public void saveFaseData(Fase f){
+        String lineData = f.getNombre() + DELIMETER +f.getDia();
         try {
-            ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(getPath()));
-            file.writeObject(fase);
-            file.close();
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(pathFileName), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+            writer.write(lineData);
+//            writer.newLine(); // require? YES
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+//            System.err.println(e.getMessage());
         }
     }
 }

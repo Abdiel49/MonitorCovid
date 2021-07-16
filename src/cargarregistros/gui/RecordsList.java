@@ -78,6 +78,7 @@ public class RecordsList extends JPanel {
         table.setModel(dataModel);
         loadDataRecord(recordJList.getSelectedIndex());
         JScrollPane scroll = new JScrollPane(table);
+        table.setAutoCreateRowSorter(true);
         recordDataPanel.add(scroll);
     }
 

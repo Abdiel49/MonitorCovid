@@ -1,6 +1,5 @@
 package cargarregistros.gui;
 
-import monitor.Fase;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
@@ -32,13 +31,14 @@ public class PanelSintomas extends JPanel{
         table.setModel(model);
         loadTableSymtoms();
         JScrollPane scroll = new JScrollPane(table);
+        table.setAutoCreateRowSorter(true);
         add(scroll);
     }
 
     private void loadTableSymtoms(){
-        Sintomas ss = isSecondPhase ? symptoms :
-            symptoms.getSintomasFase(new Fase("PrimeraFase"));
-        for(Sintoma s : ss){
+//        Sintomas ss = isSecondPhase ? symptoms :
+//            symptoms.getSintomasFase(new Fase("PrimeraFase"));
+        for(Sintoma s : symptoms){
             model.insertSymptom(s);
         }
     }

@@ -40,7 +40,23 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     @Override
     public int diagnostico(Registros registros) {
         this.registros = registros;
-        return 0;
+        loadPhaseControl();
+        int resp = makeResp();
+//        System.out.println(resp);
+        return resp;
+    }
+
+    private int makeResp(){
+        return switch (days){
+            case 1 -> 11;
+            case 2 -> 12;
+            case 3 -> 13;
+            case 4 -> 21;
+            case 5 -> 22;
+            case 6 -> 23;
+            case 7 -> 24;
+            default -> 25;
+        };
     }
 
     private void loadPhaseControl(){
@@ -52,7 +68,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     public void control(Registro r){
         if(percentageSymptoms(r)){
             if(auxRegistro != null){
-                if(differenceDays(auxRegistro, r)) days = 0;
+                if(differenceDays(auxRegistro, r)  && !isSecondPhase) days = 0;
             }
             days++;
             evaluatePhase(days);
@@ -62,8 +78,8 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     private void evaluatePhase(int days){
         isFirstPhase = days > 0 && days < START_SECOND_PHASE;
         isSecondPhase = days >= START_SECOND_PHASE;
-        if(isFirstPhase) managerFirstPhase();
-        if(isSecondPhase) managerSecondPhase();
+//        if(isFirstPhase) managerFirstPhase();
+//        if(isSecondPhase) managerSecondPhase();
     }
 
     private void managerFirstPhase(){
@@ -75,7 +91,6 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     }
 
     private boolean differenceDays(Registro f, Registro s){
-        boolean resp;
         long dayMilliseconds = 86400000;
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
@@ -83,16 +98,15 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
         c2.setTime(s.getFecha());
         int daysDifference = c2.get(Calendar.DAY_OF_MONTH) - c1.get(Calendar.DAY_OF_MONTH);
         if(daysDifference == DIFFERENCE){
-           resp = true;
+           return true;
         }else{
             long timeR1 = c1.getTimeInMillis();
             long timeR2 = c2.getTimeInMillis();
             long difference = DIFFERENCE * dayMilliseconds;
             long goodDifference = timeR1 + difference;
-            resp = timeR2 <= goodDifference;
+//            return timeR2 <= goodDifference;
         }
         return true; // for test development
-//        return resp; // for production
     }
 
     private boolean percentageSymptoms(Registro r){
