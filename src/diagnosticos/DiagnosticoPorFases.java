@@ -8,21 +8,20 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
 
     private Registros registros;
     private Registro auxRegistro;
-    private Sintomas sintomas;
+    private final Sintomas sintomas;
     private boolean isSecondPhase;
-    private boolean isFirstPhase;
     private int firstCount;
     private int secondCount;
     private int days;
     private final int START_SECOND_PHASE = 4;
     private final int PERCENTAGE_SYMTOMS = 50;
     private final int DIFFERENCE = 1;
-    private Fase fase;
 
     public DiagnosticoPorFases(Sintomas s){
         super(s);
         sintomas = s;
         auxRegistro = null;
+        isSecondPhase = false;
         days = 0;
         coundSymptoms();
     }
@@ -41,9 +40,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     public int diagnostico(Registros registros) {
         this.registros = registros;
         loadPhaseControl();
-        int resp = makeResp();
-//        System.out.println(resp);
-        return resp;
+        return makeResp();
     }
 
     private int makeResp(){
@@ -55,7 +52,8 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
             case 5 -> 22;
             case 6 -> 23;
             case 7 -> 24;
-            default -> 25;
+            case 8 -> 25;
+            default -> 0;
         };
     }
 
@@ -65,29 +63,19 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
         }
     }
 
-    public void control(Registro r){
+    private void control(Registro r){
         if(percentageSymptoms(r)){
             if(auxRegistro != null){
-                if(differenceDays(auxRegistro, r)  && !isSecondPhase) days = 0;
-            }
-            days++;
-            evaluatePhase(days);
+                boolean goodDifference = differenceDays(auxRegistro, r);
+                if(goodDifference){
+                   days++;
+                }else if(!isSecondPhase){
+                    days = 0;
+                }
+            }else days++;
+            auxRegistro = r;
+            isSecondPhase = days >= START_SECOND_PHASE;
         }
-    }
-
-    private void evaluatePhase(int days){
-        isFirstPhase = days > 0 && days < START_SECOND_PHASE;
-        isSecondPhase = days >= START_SECOND_PHASE;
-//        if(isFirstPhase) managerFirstPhase();
-//        if(isSecondPhase) managerSecondPhase();
-    }
-
-    private void managerFirstPhase(){
-
-    }
-
-    private void managerSecondPhase(){
-
     }
 
     private boolean differenceDays(Registro f, Registro s){
@@ -112,9 +100,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     private boolean percentageSymptoms(Registro r){
         Sintomas sintomas = r.getSintomas();
         int[] phases = countPhases(sintomas);
-        return isSecondPhase ?
-                isMoreThanThePercentage(phases[1]) :
-                isMoreThanThePercentage(phases[0]);
+        return isSecondPhase ? isMoreThanThePercentage(phases[1]) : isMoreThanThePercentage(phases[0]);
     }
 
     private int[] countPhases(Sintomas sintomas){
