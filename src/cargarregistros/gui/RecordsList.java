@@ -7,8 +7,11 @@ import monitor.Sintomas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class RecordsList extends JPanel {
 
@@ -43,11 +46,12 @@ public class RecordsList extends JPanel {
 
     private void buildTableRecords(){
         recordJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        recordDataPanel.setLayout( new BoxLayout(this, BoxLayout.X_AXIS));
+        recordListPanel.setLayout( new BoxLayout(recordListPanel, BoxLayout.Y_AXIS));
         loadData();
         recordJList.setSelectedIndex(0);
         JScrollPane scroll = new JScrollPane(recordJList);
         addActionList();
+        recordListPanel.add(new JLabel("Registros hechos"));
         recordListPanel.add(scroll);
     }
 
@@ -73,12 +77,14 @@ public class RecordsList extends JPanel {
     }
 
     private void buildTableRecordData(){
+        recordDataPanel.setLayout( new BoxLayout(recordDataPanel, BoxLayout.Y_AXIS));
         JTable table = new JTable();
         dataModel.setColumnIdentifiers(new String[]{"Nombre","Tipo"});
         table.setModel(dataModel);
         loadDataRecord(recordJList.getSelectedIndex());
         JScrollPane scroll = new JScrollPane(table);
         table.setAutoCreateRowSorter(true);
+        recordDataPanel.add(new JLabel("Sintomas del registro"));
         recordDataPanel.add(scroll);
     }
 
