@@ -4,7 +4,10 @@ import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
 import monitor.Sintomas;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.Box;
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,7 +18,7 @@ public class GUICargarRegistros extends JFrame {
     private final Sintomas sintomas;
     private final Container container;
     private final RecordsManagerFiles manager;
-    private AlertPanel alertPanel;
+    private final AlertPanel alertPanel;
     private RecordsSavedPanel recordsList;
     private PanelSintomas panel;
 

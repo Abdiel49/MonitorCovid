@@ -35,7 +35,7 @@ public class RecordsManagerFiles {
         DELIMETER = ",";
         PATTER = "EEE MMM dd HH:mm:ss zzz yyyy";
         SEPARATOR = System.getProperty("file.separator");
-        filePath = /*"cargarregistros"+SEPARATOR+*/"Abdiel-registros.csv";
+        filePath = "Abdiel-registros.csv";
         projectDir = PathProject.pathFileProject();
     }
 
@@ -43,7 +43,10 @@ public class RecordsManagerFiles {
         String lineData = getRecordData(registro);
         String path = projectDir+filePath;
         try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(path), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            BufferedWriter writer = Files.newBufferedWriter(
+                    Paths.get(path),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND);
             writer.write(lineData);
             writer.newLine(); // require? YES
             writer.close();
@@ -96,7 +99,6 @@ public class RecordsManagerFiles {
             o = cons.newInstance(value);
         } catch (ClassNotFoundException | NoSuchMethodException |
             InvocationTargetException | InstantiationException | IllegalAccessException e) {
-//            System.err.println(e.getMessage());
             e.printStackTrace();
         }
         return (Sintoma)o;
@@ -115,7 +117,6 @@ public class RecordsManagerFiles {
                 reader.close();
             }
         }catch (IOException e) {
-//            System.err.println(e.getMessage());
             e.printStackTrace();
         }
         return data;
@@ -126,7 +127,7 @@ public class RecordsManagerFiles {
         try{
             return format.parse(cad);
         }catch (ParseException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

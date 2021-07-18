@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption;
 public class DatosFase {
 
     private final String pathFileName;
-    private final String DELIMETER = ",";
+    private final String DELIMITER = ",";
 
     public DatosFase(){
         pathFileName = pathFileProject() + "Abdiel-fase.csv";
@@ -27,7 +27,7 @@ public class DatosFase {
             dir = new File(path);
             if(dir.list() != null){
                 String[] dirFiles = dir.list();
-                String files = String.join(DELIMETER,dirFiles);
+                String files = String.join(DELIMITER, dirFiles != null ? dirFiles : new String[0]);
                 production = files.contains("out");
             }
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class DatosFase {
                 String line;
                 while( (line = reader.readLine()) != null ){
                     if(line.length()> 5){
-                        data = line.split(DELIMETER);
+                        data = line.split(DELIMITER);
                     }
                 }
                 reader.close();
@@ -74,7 +74,7 @@ public class DatosFase {
     }
 
     public void saveFaseData(Fase f){
-        String lineData = f.getNombre() + DELIMETER +f.getDia();
+        String lineData = f.getNombre() + DELIMITER +f.getDia();
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(pathFileName), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
             writer.write(lineData);

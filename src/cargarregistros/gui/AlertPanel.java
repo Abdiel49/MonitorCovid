@@ -11,8 +11,8 @@ public class AlertPanel extends JPanel {
     static final Color ORANGE = new Color(230,50,30);
     static final Color RED = new Color(250,15,15);
 
-    private JLabel phase;
-    private JLabel message;
+    private final JLabel phase;
+    private final JLabel message;
 
     public AlertPanel(){
         phase = new JLabel();

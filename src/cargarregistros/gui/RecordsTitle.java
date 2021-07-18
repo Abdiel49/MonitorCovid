@@ -10,7 +10,7 @@ import java.text.DateFormat;
 
 public class RecordsTitle extends JPanel {
 
-    private JLabel dateLabel;
+    private final JLabel dateLabel;
 
     public RecordsTitle(){
         this.setLayout(new BorderLayout());

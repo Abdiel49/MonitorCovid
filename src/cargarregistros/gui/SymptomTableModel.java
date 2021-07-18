@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SymptomTableModel extends DefaultTableModel {
 
-    private List<Sintoma> sintomaList;
+    private final List<Sintoma> sintomaList;
     private final int BOOL_COLUMN_INDEX = 2;
 
     public SymptomTableModel(){
@@ -27,20 +27,6 @@ public class SymptomTableModel extends DefaultTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return columnIndex == BOOL_COLUMN_INDEX; // Only the first column in the table should be editable
-    }
-
-    public Sintoma getRowValue(int index){
-        if(sintomaList.size()> index)
-            return sintomaList.get(index);
-        return null;
-    }
-
-    public boolean isRowChecked(int row){
-        return (Boolean) getValueAt(row, BOOL_COLUMN_INDEX);
-    }
-
-    public List<Sintoma> getItems(){
-        return sintomaList;
     }
 
     public Sintomas getSelectedSymptoms(){

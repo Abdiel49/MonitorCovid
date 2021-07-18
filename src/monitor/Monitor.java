@@ -26,7 +26,6 @@ public class Monitor {
 
     public void monitorear() {
         registros = cargarRegistros.getRegistros();
-//        registros.push(registro);
         resultadoDiagnostico = funcion.diagnostico(registros);
         guardarEstado(resultadoDiagnostico);
         mostrarFase(fase);

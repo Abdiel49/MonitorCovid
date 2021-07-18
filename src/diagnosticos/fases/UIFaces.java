@@ -25,10 +25,11 @@ public class UIFaces {
     }
 
     private void consultaMedica(){
-        println("Se le recomineda que haga cita con un profesional de la salud, por sus sintomas" +
-                "\nYa visito visito a un medico?" +
-                "\n1. Si." +
-                "\n2. No.");
+        println("""
+                Se le recomineda que haga cita con un profesional de la salud, por sus sintomas
+                Ya visito visito a un medico?
+                1. Si.
+                2. No.""");
         int resp = readOption();
         switch (resp){
             case 1 -> println("Bien, siga cuidando su salud");
@@ -37,10 +38,11 @@ public class UIFaces {
     }
 
     private void pruebaTest(){
-        println("Se le recomineda que se tome un Test, por los sintomas presentados" +
-                "\nYa hizo el Test?" +
-                "\n1. Si." +
-                "\n2. No.");
+        println("""
+                Se le recomineda que se tome un Test, por los sintomas presentados
+                Ya hizo el Test?
+                1. Si.
+                2. No.""");
         int resp = readOption();
         switch (resp){
             case 1 -> println("Bien, espere las indicaciones de su medico");

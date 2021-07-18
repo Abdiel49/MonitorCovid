@@ -14,7 +14,7 @@ import java.util.Vector;
 public class InputSymptom extends JPanel {
 
     private JTextField textField;
-    private JComboBox<String> typeSymptomBox;
+    private final JComboBox<String> typeSymptomBox;
     private JPanel inputPanel;
 
     public InputSymptom(Vector<String> boxItems){
@@ -41,8 +41,8 @@ public class InputSymptom extends JPanel {
     }
 
     public String[] getData(){
-        int boxindex = typeSymptomBox.getSelectedIndex();
-        String type = typeSymptomBox.getItemAt(boxindex);
+        int boxIndex = typeSymptomBox.getSelectedIndex();
+        String type = typeSymptomBox.getItemAt(boxIndex);
         String name = Validator.normalize(textField.getText());
         textField.setText("");
         return new String[]{type, name};

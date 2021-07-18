@@ -1,6 +1,11 @@
 package diagnosticos;
 
-import monitor.*;
+import monitor.Sintomas;
+import monitor.Sintoma;
+import monitor.Registros;
+import monitor.Registro;
+import monitor.FuncionDiagnostico;
+
 
 import java.util.Calendar;
 
@@ -14,7 +19,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     private int secondCount;
     private int days;
     private final int START_SECOND_PHASE = 4;
-    private final int PERCENTAGE_SYMTOMS = 50;
+    private final int PERCENTAGE_SYMPTOMS = 50;
     private final int DIFFERENCE = 1;
 
     public DiagnosticoPorFases(Sintomas s){
@@ -40,8 +45,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     public int diagnostico(Registros registros) {
         this.registros = registros;
         loadPhaseControl();
-        int resp = makeResp();
-        return resp;
+        return makeResp();
     }
 
     private int makeResp(){
@@ -93,9 +97,9 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
             long timeR2 = c2.getTimeInMillis();
             long difference = DIFFERENCE * dayMilliseconds;
             long goodDifference = timeR1 + difference;
-//            return timeR2 <= goodDifference;
+            return timeR2 <= goodDifference;
         }
-        return true; // for test development
+//        return true; // for test development
     }
 
     private boolean percentageSymptoms(Registro r){
@@ -118,7 +122,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
 
     private boolean isMoreThanThePercentage(int items){
         int sizeList = isSecondPhase ? secondCount : firstCount;
-        double percent = (sizeList * PERCENTAGE_SYMTOMS)/100.0;
+        double percent = (sizeList * PERCENTAGE_SYMPTOMS)/100.0;
         return items >= percent;
     }
 }

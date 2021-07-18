@@ -5,7 +5,12 @@ import cargarsintomas.utils.Validator;
 import monitor.Sintoma;
 import monitor.Sintomas;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -95,9 +100,9 @@ public class GUICargarSintomas extends JFrame{
         Sintomas sintomas = manager.loadSymptoms();
         tableData = new TableData(sintomas);
         int width = ESize.WIDTH.get()-20;
-        int heicht = ESize.HEIGHT.get()/2;
+        int height = ESize.HEIGHT.get()/2;
         JScrollPane scroll = new JScrollPane(tableData);
-        scroll.setPreferredSize(new Dimension(width, heicht));
+        scroll.setPreferredSize(new Dimension(width, height));
         container.add(scroll);
     }
 

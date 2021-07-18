@@ -30,7 +30,7 @@ public class SymptomManager {
     public SymptomManager(){
         DELIMETER = ",";
         SEPARATOR = System.getProperty("file.separator");
-        symptomsFile = /*"cargarsintomas"+SEPARATOR+*/"Abdiel-sintomas.csv";
+        symptomsFile = "Abdiel-sintomas.csv";
         pathProject = PathProject.pathFileProject();
         sintomas = new Sintomas();
     }
@@ -64,12 +64,11 @@ public class SymptomManager {
                 if(jarEntry.getName().startsWith("sintomas/")){
                     String nameClass = jarEntry.getRealName().replace("sintomas/","");
                     String data = nameClass.replace(".class","");
-//                    System.out.println("data is:\t"+data);
                     items.add(data);
                 }
             }
         } catch (IOException e) {
-            System.err.println("No se encontro el archivo Home.jar");
+            e.printStackTrace();
         }
         return items;
     }
@@ -113,7 +112,6 @@ public class SymptomManager {
             }
         }catch (IOException e) {
             e.printStackTrace();
-//            System.err.println(e.getMessage());
         }
         return list;
     }
@@ -146,7 +144,6 @@ public class SymptomManager {
             writer.newLine(); // require? YES
             writer.close();
         } catch (IOException e) {
-//            System.err.println(e.getMessage());
             e.printStackTrace();
         }
     }

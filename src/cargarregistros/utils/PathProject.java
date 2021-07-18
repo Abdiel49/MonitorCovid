@@ -14,8 +14,8 @@ public class PathProject {
         try {
             path = dir.getCanonicalPath();
             dir = new File(path);
-            String[] dirFiles = dir.list()==null ? new String[]{} : dir.list();
-            String files = String.join(DELIMETER,dirFiles);
+            String[] dirFiles = dir.list();
+            String files = String.join(DELIMETER, dirFiles != null ? dirFiles : new String[0]);
             production = files.contains("out");
         } catch (IOException e) {
             e.printStackTrace();
