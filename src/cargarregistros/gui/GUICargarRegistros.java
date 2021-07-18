@@ -16,7 +16,7 @@ public class GUICargarRegistros extends JFrame {
     private final Container container;
     private final RecordsManagerFiles manager;
     private AlertPanel alertPanel;
-    private RecordsList recordsList;
+    private RecordsSavedPanel recordsList;
     private PanelSintomas panel;
 
     public GUICargarRegistros(Sintomas s){
@@ -95,7 +95,7 @@ public class GUICargarRegistros extends JFrame {
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
         container.add(register);
-        recordsList = new RecordsList(manager.loadRegistros());
+        recordsList = new RecordsSavedPanel(manager.loadRegistros());
         container.add(recordsList);
     }
 

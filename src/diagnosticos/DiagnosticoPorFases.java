@@ -40,7 +40,8 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     public int diagnostico(Registros registros) {
         this.registros = registros;
         loadPhaseControl();
-        return makeResp();
+        int resp = makeResp();
+        return resp;
     }
 
     private int makeResp(){
