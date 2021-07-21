@@ -6,11 +6,17 @@ import monitor.Sintoma;
 import monitor.Sintomas;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordsSavedPanel extends JPanel {
 
@@ -19,6 +25,7 @@ public class RecordsSavedPanel extends JPanel {
     private final JPanel recordListPanel;
     private final JPanel recordDataPanel;
     private final ListRecords listRecords;
+    private final JTable dataTable;
 
     public RecordsSavedPanel(Registros r){
         registros = r;
@@ -26,6 +33,7 @@ public class RecordsSavedPanel extends JPanel {
         listRecords = new ListRecords();
         recordDataPanel = new JPanel();
         recordListPanel = new JPanel();
+        dataTable = new JTable();
         init();
         setVisible(true);
     }
@@ -60,14 +68,26 @@ public class RecordsSavedPanel extends JPanel {
 
     private void buildTableRecordData(){
         recordDataPanel.setLayout( new BoxLayout(recordDataPanel, BoxLayout.Y_AXIS));
-        JTable table = new JTable();
         dataModel.setColumnIdentifiers(new String[]{"Nombre","Tipo"});
-        table.setModel(dataModel);
+        dataTable.setModel(dataModel);
+        dataTable.setEnabled(false);
+        dataTable.setAutoCreateRowSorter(true);
         loadDataRecord(listRecords.getSelectedItem());
-        JScrollPane scroll = new JScrollPane(table);
-        table.setAutoCreateRowSorter(true);
+        sortDataTable();
+        JScrollPane scroll = new JScrollPane(dataTable);
         recordDataPanel.add(new JLabel("Sintomas del registro"));
         recordDataPanel.add(scroll);
+    }
+
+    private void sortDataTable(){
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(dataTable.getModel());
+        sorter.setSortsOnUpdates(true);
+        dataTable.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        int nameColumn = 0;
+        sortKeys.add(new RowSorter.SortKey(nameColumn, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
     }
 
     private void loadDataRecord(Registro r){

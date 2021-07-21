@@ -6,8 +6,14 @@ import monitor.Sintomas;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PanelSintomas extends JPanel{
 
@@ -27,13 +33,24 @@ public class PanelSintomas extends JPanel{
     private void init(){
         model.setColumnIdentifiers(new String []{"Nombre","Tipo", "Seleccionar"});
         table.setModel(model);
-        loadTableSymtoms();
+        loadTableSymptoms();
+        sortDataTable();
         JScrollPane scroll = new JScrollPane(table);
-        table.setAutoCreateRowSorter(true);
         add(scroll);
     }
 
-    private void loadTableSymtoms(){
+    private void sortDataTable(){
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        sorter.setSortsOnUpdates(true);
+        table.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        int nameColumn = 0;
+        sortKeys.add(new RowSorter.SortKey(nameColumn, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        sorter.sort();
+    }
+
+    private void loadTableSymptoms(){
         for(Sintoma s : symptoms){
             model.insertSymptom(s);
         }
