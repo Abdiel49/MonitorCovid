@@ -124,7 +124,6 @@ public class GUICargarRegistros extends JFrame {
     }
 
     private int dayControl(){
-
         return registros.isEmpty() ? 1 : RecordDaysControl.differenceDays(registros.peek(), new Date());
     }
 }
