@@ -107,8 +107,7 @@ public class GUICargarRegistros extends JFrame {
 
     private void registerSymptoms(){
         Sintomas s = panel.getSymptomsSelected();
-        int days = RecordDaysControl.differenceDays(registros.peek(), new Date());
-        if(days == 1){
+        if(dayControl() == 1){
             if(s.iterator().hasNext()){
                 Registro r = new Registro(new Date(), s);
                 registros.push(r);
@@ -122,5 +121,10 @@ public class GUICargarRegistros extends JFrame {
         }else{
             alertPanel.message("Ya ha regsitrado sus sintomas el dia de hoy!",AlertPanel.ORANGE);
         }
+    }
+
+    private int dayControl(){
+
+        return registros.isEmpty() ? 1 : RecordDaysControl.differenceDays(registros.peek(), new Date());
     }
 }
