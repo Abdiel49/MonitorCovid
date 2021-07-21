@@ -1,7 +1,9 @@
 package cargarregistros.gui;
 
+import cargarregistros.utils.RecordDaysControl;
 import cargarregistros.utils.RecordsManagerFiles;
 import monitor.Registro;
+import monitor.Registros;
 import monitor.Sintomas;
 
 import javax.swing.JFrame;
@@ -21,6 +23,7 @@ public class GUICargarRegistros extends JFrame {
     private final AlertPanel alertPanel;
     private RecordsSavedPanel recordsList;
     private PanelSintomas panel;
+    private Registros registros;
 
     public GUICargarRegistros(Sintomas s){
         super("Cargar Registros");
@@ -28,6 +31,7 @@ public class GUICargarRegistros extends JFrame {
         manager = new RecordsManagerFiles();
         container = Box.createVerticalBox();
         alertPanel = new AlertPanel();
+        registros = manager.loadRegistros();
         init();
     }
 
@@ -91,8 +95,6 @@ public class GUICargarRegistros extends JFrame {
         JScrollPane scroll = new JScrollPane(panel);
         container.add(scroll);
         // alert panel
-//        alertPanel.phase("Primera Fase",AlertPanel.GREEN);
-//        alertPanel.message("Mensaje de Prueba", AlertPanel.ORANGE);
         container.add(alertPanel);
         // save record button
         JButton register = new JButton("Guardar Registro");
@@ -105,14 +107,20 @@ public class GUICargarRegistros extends JFrame {
 
     private void registerSymptoms(){
         Sintomas s = panel.getSymptomsSelected();
-        if(s.iterator().hasNext()){
-            Registro r = new Registro(new Date(), s);
-            manager.saveRecordInFile(r);
-            recordsList.addRecord(r);
-            panel.unselect();
-            alertPanel.message("Se a guardado el registro",AlertPanel.GREEN);
+        int days = RecordDaysControl.differenceDays(registros.peek(), new Date());
+        if(days == 1){
+            if(s.iterator().hasNext()){
+                Registro r = new Registro(new Date(), s);
+                registros.push(r);
+                manager.saveRecordInFile(r);
+                recordsList.addRecord(r);
+                panel.unselect();
+                alertPanel.message("Se a guardado el registro",AlertPanel.GREEN);
+            }else{
+                alertPanel.message("No de an seleccionado sintomas!",AlertPanel.RED);
+            }
         }else{
-            alertPanel.message("No de an seleccionado sintomas!",AlertPanel.RED);
+            alertPanel.message("Ya ha regsitrado sus sintomas el dia de hoy!",AlertPanel.ORANGE);
         }
     }
 }
