@@ -83,21 +83,22 @@ public class GUICargarRegistros extends JFrame {
     }
 
     private void buildRecordsGui(){
-        // above
+        // title
         RecordsTitle title = new RecordsTitle();
         container.add(title);
-        // middle
+        // symptoms panel
         panel = new PanelSintomas(sintomas);
         JScrollPane scroll = new JScrollPane(panel);
         container.add(scroll);
         // alert panel
-//        alertPanel.setPhase("Primera Fase",AlertPanel.GREEN);
-//        alertPanel.setMessage("Mensaje de Prueba", AlertPanel.ORANGE);
-//        container.add(alertPanel);
-        // below
+//        alertPanel.phase("Primera Fase",AlertPanel.GREEN);
+//        alertPanel.message("Mensaje de Prueba", AlertPanel.ORANGE);
+        container.add(alertPanel);
+        // save record button
         JButton register = new JButton("Guardar Registro");
         register.addActionListener(e -> registerSymptoms());
         container.add(register);
+        // Records saved panel
         recordsList = new RecordsSavedPanel(manager.loadRegistros());
         container.add(recordsList);
     }
@@ -109,9 +110,9 @@ public class GUICargarRegistros extends JFrame {
             manager.saveRecordInFile(r);
             recordsList.addRecord(r);
             panel.unselect();
-            alertPanel.setMessage("Se a guardado el registro",AlertPanel.GREEN);
+            alertPanel.message("Se a guardado el registro",AlertPanel.GREEN);
         }else{
-            alertPanel.setMessage("No de an seleccionado sintomas!",AlertPanel.RED);
+            alertPanel.message("No de an seleccionado sintomas!",AlertPanel.RED);
         }
     }
 }

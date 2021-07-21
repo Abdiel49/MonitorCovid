@@ -26,16 +26,16 @@ public class AlertPanel extends JPanel {
         f = message.getFont();
         message.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
         add(phase);
-        add(new JLabel("   -   ")); // separator
+//        add(new JLabel("   -   ")); // separator
         add(message);
     }
 
-    public void setPhase(String phaseName, Color c){
+    public void phase(String phaseName, Color c){
         phase.setForeground(c);
         phase.setText(phaseName.toUpperCase());
     }
 
-    public void setMessage(String m, Color c){
+    public void message(String m, Color c){
         message.setForeground(c);
         message.setText(m.toUpperCase());
     }

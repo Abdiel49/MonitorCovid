@@ -45,6 +45,7 @@ public class DiagnosticoPorFases extends FuncionDiagnostico {
     public int diagnostico(Registros registros) {
         this.registros = registros;
         loadPhaseControl();
+        System.out.println("days : "+days);
         return makeResp();
     }
 
